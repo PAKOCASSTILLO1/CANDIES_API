@@ -1,0 +1,34 @@
+POST http://localhost:4000/api/usuario/register HTTP/1.1
+content-type: application/json
+
+{
+    "Nombre": "FR",
+    "Apellido": "CG",
+    "Username": "PAKO1",
+    "Password": "1234"
+}
+
+###
+POST http://localhost:4000/api/usuario/authenticate HTTP/1.1
+content-type: application/json
+
+{
+    "Username": "PAKO1",
+    "Password": "1234"
+}
+
+###
+GET http://localhost:4000/api/usuario HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6IjIiLCJuYmYiOjE1ODQ2ODQ0MDcsImV4cCI6MTU4NDY5MTYwNywiaWF0IjoxNTg0Njg0NDA3fQ.ngW7_uCJBWpX4-5L8quaqKq1zY7_kb3J626XUAcCRSs
+
+###
+GET http://localhost:4000/api/usuario/1 HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6IjIiLCJuYmYiOjE1ODQ2ODQ0MDcsImV4cCI6MTU4NDY5MTYwNywiaWF0IjoxNTg0Njg0NDA3fQ.ngW7_uCJBWpX4-5L8quaqKq1zY7_kb3J626XUAcCRSs
+
+# {
+#   "id": 2,
+#   "username": "PAKO1",
+#   "firstName": "FR",
+#   "lastName": "CG",
+#   "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6IjIiLCJuYmYiOjE1ODQ2ODQ0MDcsImV4cCI6MTU4NDY5MTYwNywiaWF0IjoxNTg0Njg0NDA3fQ.ngW7_uCJBWpX4-5L8quaqKq1zY7_kb3J626XUAcCRSs"
+# }
