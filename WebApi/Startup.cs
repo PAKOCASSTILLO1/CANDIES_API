@@ -52,7 +52,7 @@ namespace WebApi
                 {
                     OnTokenValidated = context =>
                     {
-                        var userService = context.HttpContext.RequestServices.GetRequiredService<IUsuarioService>();
+                        var userService = context.HttpContext.RequestServices.GetRequiredService<IUserService>();
                         var userId = int.Parse(context.Principal.Identity.Name);
                         var user = userService.GetById(userId);
                         if (user == null)
@@ -75,7 +75,7 @@ namespace WebApi
             });
 
             // configure DI for application services
-            services.AddScoped<IUsuarioService, UsuarioService>();
+            services.AddScoped<IUserService, UserService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

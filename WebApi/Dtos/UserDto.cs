@@ -2,11 +2,11 @@ using System.ComponentModel.DataAnnotations;
 
 namespace WebApi.Dtos
 {
-    public class UsuarioDto
+    public class UserDto
     {
-        public int IdUsuario { get; set; }
-        public string Nombre { get; set; }
-        public string Apellido { get; set; }
+        public int IdUser { get; set; }
+        public string Name { get; set; }
+        public string Lastname { get; set; }
         public string Username { get; set; }
         public string Password { get; set; }
     }

@@ -6,31 +6,31 @@ using WebApi.Helpers;
 
 namespace WebApi.Services
 {
-    public interface IUsuarioService
+    public interface IUserService
     {
-        Usuario Authenticate(string username, string password);
-        IEnumerable<Usuario> GetAll();
-        Usuario GetById(int id);
-        Usuario Create(Usuario user, string password);
-        void Update(Usuario user, string password = null);
+        User Authenticate(string username, string password);
+        IEnumerable<User> GetAll();
+        User GetById(int id);
+        User Create(User user, string password);
+        User Update(User user, string password = null);
         void Delete(int id);
     }
 
-    public class UsuarioService : IUsuarioService
+    public class UserService : IUserService
     {
         private DataContext _context;
 
-        public UsuarioService(DataContext context)
+        public UserService(DataContext context)
         {
             _context = context;
         }
 
-        public Usuario Authenticate(string username, string password)
+        public User Authenticate(string username, string password)
         {
             if (string.IsNullOrEmpty(username) || string.IsNullOrEmpty(password))
                 return null;
 
-            var user = _context.Usuario.SingleOrDefault(x => x.Username == username);
+            var user = _context.User.SingleOrDefault(x => x.Username == username);
 
             // check if username exists
             if (user == null)
@@ -44,23 +44,23 @@ namespace WebApi.Services
             return user;
         }
 
-        public IEnumerable<Usuario> GetAll()
+        public IEnumerable<User> GetAll()
         {
-            return _context.Usuario;
+            return _context.User;
         }
 
-        public Usuario GetById(int id)
+        public User GetById(int id)
         {
-            return _context.Usuario.Find(id);
+            return _context.User.Find(id);
         }
 
-        public Usuario Create(Usuario user, string password)
+        public User Create(User user, string password)
         {
             // validation
             if (string.IsNullOrWhiteSpace(password))
                 throw new AppException("Password is required");
 
-            if (_context.Usuario.Any(x => x.Username == user.Username))
+            if (_context.User.Any(x => x.Username == user.Username))
                 throw new AppException("Username \"" + user.Username + "\" is already taken");
 
             byte[] passwordHash, passwordSalt;
@@ -69,29 +69,29 @@ namespace WebApi.Services
             user.PasswordHash = passwordHash;
             user.PasswordSalt = passwordSalt;
 
-            _context.Usuario.Add(user);
+            _context.User.Add(user);
             _context.SaveChanges();
 
             return user;
         }
 
-        public void Update(Usuario userParam, string password = null)
+        public User Update(User userParam, string password = null)
         {
-            var user = _context.Usuario.Find(userParam.IdUsuario);
+            var user = _context.User.Find(userParam.IdUser);
 
             if (user == null)
-                throw new AppException("Usuario no encontrado");
+                throw new AppException("User not found");
 
             if (userParam.Username != user.Username)
             {
                 // username has changed so check if the new username is already taken
-                if (_context.Usuario.Any(x => x.Username == userParam.Username))
+                if (_context.User.Any(x => x.Username == userParam.Username))
                     throw new AppException("Username " + userParam.Username + " is already taken");
             }
 
             // update user properties
-            user.Nombre = userParam.Nombre;
-            user.Apellido = userParam.Apellido;
+            user.Name = userParam.Name;
+            user.Lastname = userParam.Lastname;
             user.Username = userParam.Username;
 
             // update password if it was entered
@@ -104,16 +104,17 @@ namespace WebApi.Services
                 user.PasswordSalt = passwordSalt;
             }
 
-            _context.Usuario.Update(user);
+            _context.User.Update(user);
             _context.SaveChanges();
+            return user;
         }
 
         public void Delete(int id)
         {
-            var user = _context.Usuario.Find(id);
+            var user = _context.User.Find(id);
             if (user != null)
             {
-                _context.Usuario.Remove(user);
+                _context.User.Remove(user);
                 _context.SaveChanges();
             }
         }

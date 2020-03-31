@@ -11,24 +11,24 @@ namespace WebApi.Controllers
     [Authorize]
     [Route("api/[controller]")]
     [ApiController]
-    public class RolController : ControllerBase
+    public class RoleController : ControllerBase
     {
         private readonly DataContext _context;
 
-        public RolController(DataContext context)
+        public RoleController(DataContext context)
         {
             _context = context;
         }
 
         //GET:      api/rols
         [HttpGet]
-        public ActionResult<IEnumerable<Rol>> GetRols()
+        public ActionResult<IEnumerable<Role>> GetRoles()
         {
-            var array = _context.Rol.ToArray();
-            List<Rol> rols = new List<Rol>();
+            var array = _context.Role.ToArray();
+            List<Role> rols = new List<Role>();
             foreach (var rol in array)
             {
-                if (rol.estado != false)
+                if (rol.state != false)
                 {
                     rols.Add(rol);
                 }
@@ -37,9 +37,9 @@ namespace WebApi.Controllers
         }
         //GET:      api/rols/n
         [HttpGet("{id}")]
-        public ActionResult<Rol> GetRolItem(int id)
+        public ActionResult<Role> GetRoleItem(int id)
         {
-            var rolItem = _context.Rol.Find(id);
+            var rolItem = _context.Role.Find(id);
 
             if (rolItem == null)
             {
@@ -49,38 +49,38 @@ namespace WebApi.Controllers
         }
         //POST:     api/rols
         [HttpPost]
-        public ActionResult<Rol> PostRolItem(Rol rol)
+        public ActionResult<Role> PostRoleItem(Role rol)
         {
-            _context.Rol.Add(rol);
+            _context.Role.Add(rol);
             _context.SaveChanges();
             return Ok(rol);
         }
 
         //PUT:      api/rols/n
         [HttpPut("{id}")]
-        public ActionResult<Rol> PutRolItem(int id, Rol rol)
+        public ActionResult<Role> PutRoleItem(int id, Role rol)
         {
-            if (id != rol.IdRol)
+            if (id != rol.IdRole)
             {
                 return BadRequest();
             }
             _context.Entry(rol).State = EntityState.Modified;
             _context.SaveChanges();
-            var rolItem = _context.Rol.Find(id);
+            var rolItem = _context.Role.Find(id);
             return rolItem;
         }
 
         //DELETE:   api/rols/n
         [HttpDelete("{id}")]
-        public ActionResult<Rol> DeleteRolItem(int id)
+        public ActionResult<Role> DeleteRoleItem(int id)
         {
-            var rolItem = _context.Rol.Find(id);
+            var rolItem = _context.Role.Find(id);
 
             if (rolItem == null)
             {
                 return NotFound();
             }
-            rolItem.estado = false;
+            rolItem.state = false;
             _context.SaveChanges();
             return rolItem;
         }

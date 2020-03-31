@@ -7,10 +7,10 @@ namespace WebApi.Helpers
     {
         public DataContext(DbContextOptions<DataContext> options) : base(options) { }
 
-        public DbSet<Usuario> Usuario { get; set; }
-        public DbSet<Rol> Rol { get; set; }
-        public DbSet<Pagina> Pagina { get; set; }
-        public DbSet<UsuarioRol> UsuarioRol { get; set; }
-        public DbSet<RolPagina> RolPagina { get; set; }
+        public DbSet<User> User { get; set; }
+        public DbSet<Role> Role { get; set; }
+        public DbSet<Page> Page { get; set; }
+        public DbSet<UserRole> UserRole { get; set; }
+        public DbSet<RolePage> RolePage { get; set; }
     }
 }

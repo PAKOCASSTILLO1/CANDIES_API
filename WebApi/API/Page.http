@@ -1,22 +1,32 @@
-GET http://localhost:4000/api/rolpagina HTTP/1.1
+GET http://localhost:4000/api/page HTTP/1.1
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6IjIiLCJuYmYiOjE1ODQ2ODQ0MDcsImV4cCI6MTU4NDY5MTYwNywiaWF0IjoxNTg0Njg0NDA3fQ.ngW7_uCJBWpX4-5L8quaqKq1zY7_kb3J626XUAcCRSs
 
 ###
-GET http://localhost:4000/api/rolpagina/1 HTTP/1.1
+GET http://localhost:4000/api/page/1 HTTP/1.1
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6IjIiLCJuYmYiOjE1ODQ2ODQ0MDcsImV4cCI6MTU4NDY5MTYwNywiaWF0IjoxNTg0Njg0NDA3fQ.ngW7_uCJBWpX4-5L8quaqKq1zY7_kb3J626XUAcCRSs
 
 ###
-POST http://localhost:4000/api/rolpagina HTTP/1.1
+POST http://localhost:4000/api/page HTTP/1.1
 content-type: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6IjIiLCJuYmYiOjE1ODQ2ODQ0MDcsImV4cCI6MTU4NDY5MTYwNywiaWF0IjoxNTg0Njg0NDA3fQ.ngW7_uCJBWpX4-5L8quaqKq1zY7_kb3J626XUAcCRSs
 
 {
-  "idRol": 1,
-  "idPagina": 4,
+  "description": "page5",
   "estado": true
 }
 
 ###
-DELETE http://localhost:4000/api/rolpagina/5 HTTP/1.1
+PUT http://localhost:4000/api/page/5 HTTP/1.1
+content-type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6IjIiLCJuYmYiOjE1ODQ2ODQ0MDcsImV4cCI6MTU4NDY5MTYwNywiaWF0IjoxNTg0Njg0NDA3fQ.ngW7_uCJBWpX4-5L8quaqKq1zY7_kb3J626XUAcCRSs
+
+{
+  "idPagina": 5,
+  "description": "page5.1",
+  "estado": true
+}
+
+###
+DELETE http://localhost:4000/api/page/5 HTTP/1.1
 content-type: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6IjIiLCJuYmYiOjE1ODQ2ODQ0MDcsImV4cCI6MTU4NDY5MTYwNywiaWF0IjoxNTg0Njg0NDA3fQ.ngW7_uCJBWpX4-5L8quaqKq1zY7_kb3J626XUAcCRSs

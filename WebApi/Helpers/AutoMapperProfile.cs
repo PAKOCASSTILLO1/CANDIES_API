@@ -8,8 +8,8 @@ namespace WebApi.Helpers
     {
         public AutoMapperProfile()
         {
-            CreateMap<Usuario, UsuarioDto>();
-            CreateMap<UsuarioDto, Usuario>();
+            CreateMap<User, UserDto>();
+            CreateMap<UserDto, User>();
         }
     }
 }

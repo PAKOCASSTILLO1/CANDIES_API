@@ -18,14 +18,14 @@ namespace WebApi.Controllers
     [Authorize]
     [ApiController]
     [Route("api/[controller]")]
-    public class UsuarioController : ControllerBase
+    public class UserController : ControllerBase
     {
-        private IUsuarioService _userService;
+        private IUserService _userService;
         private IMapper _mapper;
         private readonly AppSettings _appSettings;
 
-        public UsuarioController(
-            IUsuarioService userService,
+        public UserController(
+            IUserService userService,
             IMapper mapper,
             IOptions<AppSettings> appSettings)
         {
@@ -36,7 +36,7 @@ namespace WebApi.Controllers
 
         [AllowAnonymous]
         [HttpPost("authenticate")]
-        public IActionResult Authenticate([FromBody]UsuarioDto userDto)
+        public IActionResult Authenticate([FromBody]UserDto userDto)
         {
             var user = _userService.Authenticate(userDto.Username, userDto.Password);
 
@@ -49,7 +49,7 @@ namespace WebApi.Controllers
             {
                 Subject = new ClaimsIdentity(new Claim[]
                 {
-                    new Claim(ClaimTypes.Name, user.IdUsuario.ToString())
+                    new Claim(ClaimTypes.Name, user.IdUser.ToString())
                 }),
                 Expires = DateTime.UtcNow.AddHours(2),
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
@@ -59,26 +59,27 @@ namespace WebApi.Controllers
 
             // return basic user info (without password) and token to store client side
             return Ok(new {
-                Id = user.IdUsuario,
+                IdUser = user.IdUser,
+                Name = user.Name,
+                Lastname = user.Lastname,
                 Username = user.Username,
-                FirstName = user.Nombre,
-                LastName = user.Apellido,
                 Token = tokenString
             });
         }
 
         [AllowAnonymous]
         [HttpPost("register")]
-        public IActionResult Register([FromBody]UsuarioDto userDto)
+        public IActionResult Register([FromBody]UserDto userDto)
         {
             // map dto to entity
-            var user = _mapper.Map<Usuario>(userDto);
+            var user = _mapper.Map<User>(userDto);
 
             try
             {
                 // save
-                _userService.Create(user, userDto.Password);
-                return Ok();
+                user = _userService.Create(user, userDto.Password);
+                userDto = _mapper.Map<UserDto>(user);
+                return Ok(userDto);
             }
             catch(AppException ex)
             {
@@ -91,7 +92,7 @@ namespace WebApi.Controllers
         public IActionResult GetAll()
         {
             var users =  _userService.GetAll();
-            var userDtos = _mapper.Map<IList<UsuarioDto>>(users);
+            var userDtos = _mapper.Map<IList<UserDto>>(users);
             return Ok(userDtos);
         }
 
@@ -99,21 +100,22 @@ namespace WebApi.Controllers
         public IActionResult GetById(int id)
         {
             var user =  _userService.GetById(id);
-            var userDto = _mapper.Map<UsuarioDto>(user);
+            var userDto = _mapper.Map<UserDto>(user);
             return Ok(userDto);
         }
 
         [HttpPut("{id}")]
-        public IActionResult Update(int id, [FromBody]UsuarioDto userDto)
+        public IActionResult Update(int id, [FromBody]UserDto userDto)
         {
             // map dto to entity and set id
-            var user = _mapper.Map<Usuario>(userDto);
-            user.IdUsuario = id;
+            var user = _mapper.Map<User>(userDto);
+            user.IdUser = id;
 
             try
             {
                 // save
-                _userService.Update(user, userDto.Password);
+                user =  _userService.Update(user, userDto.Password);
+                userDto = _mapper.Map<UserDto>(user);
                 return Ok();
             }
             catch(AppException ex)
