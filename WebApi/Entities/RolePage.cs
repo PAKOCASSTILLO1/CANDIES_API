@@ -8,13 +8,13 @@ namespace WebApi.Entities
     public class RolePage
     {
         [Key]
-        public int IdRolePage { get; set; }
+        public int idRolePage { get; set; }
 
         [ForeignKey("role")]
-        public int IdRole {set; get;}
+        public int idRole {set; get;}
         
         [ForeignKey("page")]
-        public int IdPage {set; get;}
+        public int idPage {set; get;}
 
         public bool state { get; set; }
 

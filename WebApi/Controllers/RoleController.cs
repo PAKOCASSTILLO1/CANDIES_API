@@ -60,7 +60,7 @@ namespace WebApi.Controllers
         [HttpPut("{id}")]
         public ActionResult<Role> PutRoleItem(int id, Role rol)
         {
-            if (id != rol.IdRole)
+            if (id != rol.idRole)
             {
                 return BadRequest();
             }

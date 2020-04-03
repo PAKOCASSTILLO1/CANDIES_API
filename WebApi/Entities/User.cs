@@ -4,11 +4,12 @@ namespace WebApi.Entities
     public class User
     {
         [Key]
-        public int IdUser { get; set; }
-        public string Name { get; set; }
-        public string Lastname { get; set; }
-        public string Username { get; set; }
-        public byte[] PasswordHash { get; set; }
-        public byte[] PasswordSalt { get; set; }
+        public int idUser { get; set; }
+        public string name { get; set; }
+        public string lastName { get; set; }
+        public string userName { get; set; }
+        public byte[] passwordHash { get; set; }
+        public byte[] passwordSalt { get; set; }
+        public byte estado { get; set; }
     }
 }

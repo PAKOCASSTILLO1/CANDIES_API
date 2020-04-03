@@ -38,10 +38,10 @@ namespace WebApi.Controllers
         [HttpPost("authenticate")]
         public IActionResult Authenticate([FromBody]UserDto userDto)
         {
-            var user = _userService.Authenticate(userDto.Username, userDto.Password);
+            var user = _userService.Authenticate(userDto.userName, userDto.password);
 
             if (user == null)
-                return BadRequest(new { message = "Username or password is incorrect" });
+                return BadRequest(new { message = "Usuario o clave incorrecta." });
 
             var tokenHandler = new JwtSecurityTokenHandler();
             var key = Encoding.ASCII.GetBytes(_appSettings.Secret);
@@ -49,7 +49,7 @@ namespace WebApi.Controllers
             {
                 Subject = new ClaimsIdentity(new Claim[]
                 {
-                    new Claim(ClaimTypes.Name, user.IdUser.ToString())
+                    new Claim(ClaimTypes.Name, user.idUser.ToString())
                 }),
                 Expires = DateTime.UtcNow.AddHours(2),
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
@@ -59,11 +59,12 @@ namespace WebApi.Controllers
 
             // return basic user info (without password) and token to store client side
             return Ok(new {
-                IdUser = user.IdUser,
-                Name = user.Name,
-                Lastname = user.Lastname,
-                Username = user.Username,
-                Token = tokenString
+                idUser = user.idUser,
+                name = user.name,
+                lastName = user.lastName,
+                username = user.userName,
+                estado = user.estado,
+                token = tokenString
             });
         }
 
@@ -77,7 +78,7 @@ namespace WebApi.Controllers
             try
             {
                 // save
-                user = _userService.Create(user, userDto.Password);
+                user = _userService.Create(user, userDto.password);
                 userDto = _mapper.Map<UserDto>(user);
                 return Ok(userDto);
             }
@@ -104,17 +105,16 @@ namespace WebApi.Controllers
             return Ok(userDto);
         }
 
-        [HttpPut("{id}")]
-        public IActionResult Update(int id, [FromBody]UserDto userDto)
+        [HttpPut("update")]
+        public IActionResult Update([FromBody]UserDto userDto)
         {
             // map dto to entity and set id
             var user = _mapper.Map<User>(userDto);
-            user.IdUser = id;
 
             try
             {
                 // save
-                user =  _userService.Update(user, userDto.Password);
+                user =  _userService.Update(userDto);
                 userDto = _mapper.Map<UserDto>(user);
                 return Ok();
             }

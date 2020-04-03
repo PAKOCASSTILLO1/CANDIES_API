@@ -60,7 +60,7 @@ namespace WebApi.Controllers
         [HttpPut("{id}")]
         public ActionResult<Page> PutPageItem(int id, Page page)
         {
-            if (id != page.IdPage)
+            if (id != page.idPage)
             {
                 return BadRequest();
             }

@@ -26,11 +26,11 @@ namespace WebApi.Controllers
         {
             var array = _context.UserRole.ToArray();
             List<UserRole> userRoles = new List<UserRole>();
-            foreach (var userRole in array)
+            foreach (var UserRole in array)
             {
-                if (userRole.state != false)
+                if (UserRole.state != false)
                 {
-                    userRoles.Add(userRole);
+                    userRoles.Add(UserRole);
                 }
             }
             return userRoles;
@@ -49,22 +49,22 @@ namespace WebApi.Controllers
         }
         //POST:     api/rols
         [HttpPost]
-        public ActionResult<UserRole> PostUserRoleItem(UserRole userRole)
+        public ActionResult<UserRole> PostUserRoleItem(UserRole UserRole)
         {
-            _context.UserRole.Add(userRole);
+            _context.UserRole.Add(UserRole);
             _context.SaveChanges();
-            return Ok(userRole);
+            return Ok(UserRole);
         }
 
         //PUT:      api/rols/n
         [HttpPut("{id}")]
-        public ActionResult<UserRole> PutUserRoleItem(int id, UserRole userRole)
+        public ActionResult<UserRole> PutUserRoleItem(int id, UserRole UserRole)
         {
-            if (id != userRole.IdUserRole)
+            if (id != UserRole.idUserRole)
             {
                 return BadRequest();
             }
-            _context.Entry(userRole).State = EntityState.Modified;
+            _context.Entry(UserRole).State = EntityState.Modified;
             _context.SaveChanges();
             var userRoleItem = _context.UserRole.Find(id);
             return userRoleItem;

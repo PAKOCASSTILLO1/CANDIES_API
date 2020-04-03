@@ -57,8 +57,8 @@ namespace WebApi.Controllers
             _context.RolePage.Add(rolePage);
             _context.SaveChanges();
 
-            //return CreatedAtAction("GetRolePageItem", new RolePage{IdRolePage = rolePage.IdRolePage}, rolePage);
-            //return CreatedAtAction("GetRolePageItem", new RolePage{IdRolePage = rolePage.IdRolePage}, rolePage);
+            //return CreatedAtAction("GetRolePageItem", new RolePage{idRolePage = rolePage.idRolePage}, rolePage);
+            //return CreatedAtAction("GetRolePageItem", new RolePage{idRolePage = rolePage.idRolePage}, rolePage);
             return Ok(rolePage);
         }
 
@@ -66,7 +66,7 @@ namespace WebApi.Controllers
         [HttpPut("{id}")]
         public ActionResult<RolePage> PutRolePageItem(int id, RolePage rolePage)
         {
-            if (id != rolePage.IdRolePage)
+            if (id != rolePage.idRolePage)
             {
                 return BadRequest();
             }

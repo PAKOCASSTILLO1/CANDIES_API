@@ -6,10 +6,10 @@ namespace WebApi.Entities{
     public class Role {
         
         [Key]
-        public int IdRole { get; set; }
+        public int idRole { get; set; }
 
         [StringLength (50)]
-        public string Description { get; set; }
+        public string description { get; set; }
         public bool state { get; set; }
     }
 }

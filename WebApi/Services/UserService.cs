@@ -3,16 +3,17 @@ using System.Collections.Generic;
 using System.Linq;
 using WebApi.Entities;
 using WebApi.Helpers;
+using WebApi.Dtos;
 
 namespace WebApi.Services
 {
     public interface IUserService
     {
-        User Authenticate(string username, string password);
+        User Authenticate(string userName, string password);
         IEnumerable<User> GetAll();
         User GetById(int id);
         User Create(User user, string password);
-        User Update(User user, string password = null);
+        User Update(UserDto user);
         void Delete(int id);
     }
 
@@ -25,19 +26,19 @@ namespace WebApi.Services
             _context = context;
         }
 
-        public User Authenticate(string username, string password)
+        public User Authenticate(string userName, string password)
         {
-            if (string.IsNullOrEmpty(username) || string.IsNullOrEmpty(password))
+            if (string.IsNullOrEmpty(userName) || string.IsNullOrEmpty(password))
                 return null;
 
-            var user = _context.User.SingleOrDefault(x => x.Username == username);
+            var user = _context.User.SingleOrDefault(x => x.userName == userName);
 
-            // check if username exists
+            // check if userName exists
             if (user == null)
                 return null;
 
             // check if password is correct
-            if (!VerifyPasswordHash(password, user.PasswordHash, user.PasswordSalt))
+            if (!VerifyPasswordHash(password, user.passwordHash, user.passwordSalt))
                 return null;
 
             // authentication successful
@@ -58,16 +59,16 @@ namespace WebApi.Services
         {
             // validation
             if (string.IsNullOrWhiteSpace(password))
-                throw new AppException("Password is required");
+                throw new AppException("Clave es requerida");
 
-            if (_context.User.Any(x => x.Username == user.Username))
-                throw new AppException("Username \"" + user.Username + "\" is already taken");
+            if (_context.User.Any(x => x.userName == user.userName))
+                throw new AppException("El usurio \"" + user.userName + "\" ya existe.");
 
             byte[] passwordHash, passwordSalt;
             CreatePasswordHash(password, out passwordHash, out passwordSalt);
 
-            user.PasswordHash = passwordHash;
-            user.PasswordSalt = passwordSalt;
+            user.passwordHash = passwordHash;
+            user.passwordSalt = passwordSalt;
 
             _context.User.Add(user);
             _context.SaveChanges();
@@ -75,33 +76,35 @@ namespace WebApi.Services
             return user;
         }
 
-        public User Update(User userParam, string password = null)
+        //public User Update(User userParam, string password = null)
+        public User Update(UserDto userParam)
         {
-            var user = _context.User.Find(userParam.IdUser);
+            var user = _context.User.Find(userParam.idUser);
 
             if (user == null)
-                throw new AppException("User not found");
+                throw new AppException("Usuario no existe.");
 
-            if (userParam.Username != user.Username)
+            if (userParam.userName != user.userName)
             {
-                // username has changed so check if the new username is already taken
-                if (_context.User.Any(x => x.Username == userParam.Username))
-                    throw new AppException("Username " + userParam.Username + " is already taken");
+                // userName has changed so check if the new userName is already taken
+                if (_context.User.Any(x => x.userName == userParam.userName))
+                    throw new AppException("El usuario " + userParam.userName + " ya existe");
             }
 
             // update user properties
-            user.Name = userParam.Name;
-            user.Lastname = userParam.Lastname;
-            user.Username = userParam.Username;
+            user.name = userParam.name;
+            user.lastName = userParam.lastName;
+            user.userName = userParam.userName;
+            user.estado = userParam.estado;
 
             // update password if it was entered
-            if (!string.IsNullOrWhiteSpace(password))
+            if (!string.IsNullOrWhiteSpace(userParam.password))
             {
                 byte[] passwordHash, passwordSalt;
-                CreatePasswordHash(password, out passwordHash, out passwordSalt);
+                CreatePasswordHash(userParam.password, out passwordHash, out passwordSalt);
 
-                user.PasswordHash = passwordHash;
-                user.PasswordSalt = passwordSalt;
+                user.passwordHash = passwordHash;
+                user.passwordSalt = passwordSalt;
             }
 
             _context.User.Update(user);

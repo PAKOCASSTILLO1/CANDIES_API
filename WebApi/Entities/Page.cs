@@ -5,10 +5,10 @@ using System.ComponentModel.DataAnnotations;
 namespace WebApi.Entities{
     public class Page {
         [Key]
-        public int IdPage { get; set; }
+        public int idPage { get; set; }
 
         [StringLength (50)]
-        public string Description { get; set; }
+        public string description { get; set; }
         public bool state { get; set; }
     }
 }

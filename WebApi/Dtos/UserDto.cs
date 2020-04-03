@@ -4,10 +4,11 @@ namespace WebApi.Dtos
 {
     public class UserDto
     {
-        public int IdUser { get; set; }
-        public string Name { get; set; }
-        public string Lastname { get; set; }
-        public string Username { get; set; }
-        public string Password { get; set; }
+        public int idUser { get; set; }
+        public string name { get; set; }
+        public string lastName { get; set; }
+        public string userName { get; set; }
+        public string password { get; set; }
+        public byte estado {get; set; }
     }
 }
