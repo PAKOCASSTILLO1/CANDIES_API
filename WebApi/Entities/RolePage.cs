@@ -12,7 +12,7 @@ namespace WebApi.Entities
 
         [ForeignKey("role")]
         public int idRole {set; get;}
-        
+
         [ForeignKey("page")]
         public int idPage {set; get;}
 
