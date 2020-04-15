@@ -11,6 +11,7 @@ using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Mvc;
+using WebApi.Repository;
 
 namespace WebApi
 {
@@ -52,7 +53,7 @@ namespace WebApi
                 {
                     OnTokenValidated = context =>
                     {
-                        var userService = context.HttpContext.RequestServices.GetRequiredService<IUserService>();
+                        var userService = context.HttpContext.RequestServices.GetRequiredService<IUserRepository>();
                         var userId = int.Parse(context.Principal.Identity.Name);
                         var user = userService.GetById(userId);
                         if (user == null)
@@ -75,7 +76,11 @@ namespace WebApi
             });
 
             // configure DI for application services
-            services.AddScoped<IUserService, UserService>();
+            services.AddScoped<IUserRepository, UserService>();
+            services.AddScoped<IRoleRepository, RoleService>();
+            services.AddScoped<IPageRepository, PageService>();
+            services.AddScoped<IUserRoleRepository, UserRoleService>();
+            services.AddScoped<IRolePageRepository, RolePageService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

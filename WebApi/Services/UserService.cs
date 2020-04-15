@@ -4,20 +4,11 @@ using System.Linq;
 using WebApi.Entities;
 using WebApi.Helpers;
 using WebApi.Dtos;
+using WebApi.Repository;
 
 namespace WebApi.Services
 {
-    public interface IUserService
-    {
-        User Authenticate(string userName, string password);
-        IEnumerable<User> GetAll();
-        User GetById(int id);
-        User Create(User user, string password);
-        User Update(UserDto user);
-        void Delete(int id);
-    }
-
-    public class UserService : IUserService
+    public class UserService : IUserRepository
     {
         private DataContext _context;
 
@@ -47,7 +38,16 @@ namespace WebApi.Services
 
         public IEnumerable<User> GetAll()
         {
-            return _context.User;
+            List<User> users = _context.User.ToList();
+            List<User> users2 = _context.User.ToList();
+            foreach (User user in users)
+            {
+                if (user.state == false)
+                {
+                    users2.Remove(user);
+                }
+            }
+            return users2;
         }
 
         public User GetById(int id)
@@ -69,7 +69,6 @@ namespace WebApi.Services
 
             user.passwordHash = passwordHash;
             user.passwordSalt = passwordSalt;
-
             _context.User.Add(user);
             _context.SaveChanges();
 
@@ -95,31 +94,32 @@ namespace WebApi.Services
             user.name = userParam.name;
             user.lastName = userParam.lastName;
             user.userName = userParam.userName;
-            user.estado = userParam.estado;
 
             // update password if it was entered
-            if (!string.IsNullOrWhiteSpace(userParam.password))
-            {
-                byte[] passwordHash, passwordSalt;
-                CreatePasswordHash(userParam.password, out passwordHash, out passwordSalt);
+            // if (!string.IsNullOrWhiteSpace(userParam.password))
+            // {
+            //     byte[] passwordHash, passwordSalt;
+            //     CreatePasswordHash(userParam.password, out passwordHash, out passwordSalt);
 
-                user.passwordHash = passwordHash;
-                user.passwordSalt = passwordSalt;
-            }
+            //     user.passwordHash = passwordHash;
+            //     user.passwordSalt = passwordSalt;
+            // }
 
             _context.User.Update(user);
             _context.SaveChanges();
             return user;
         }
 
-        public void Delete(int id)
+        public User Delete(int id)
         {
             var user = _context.User.Find(id);
-            if (user != null)
+            if (user == null || user.state == false)
             {
-                _context.User.Remove(user);
-                _context.SaveChanges();
+                throw new AppException("Usuario no existe.");
             }
+            _context.User.Remove(user);
+            _context.SaveChanges();
+            return user;
         }
 
         // private helper methods
@@ -153,6 +153,11 @@ namespace WebApi.Services
             }
 
             return true;
+        }
+
+        public User Insert(User user)
+        {
+            throw new NotImplementedException();
         }
     }
 }

@@ -9,40 +9,39 @@ using System.Text;
 using Microsoft.IdentityModel.Tokens;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Authorization;
-using WebApi.Services;
 using WebApi.Dtos;
 using WebApi.Entities;
+using WebApi.Repository;
 
 namespace WebApi.Controllers
 {
     [Authorize]
     [ApiController]
-    [Route("api/[controller]")]
+    [Route("api/usuario/")]
     public class UserController : ControllerBase
     {
-        private IUserService _userService;
+        private IUserRepository _userRepository;
         private IMapper _mapper;
         private readonly AppSettings _appSettings;
 
-        public UserController(
-            IUserService userService,
-            IMapper mapper,
-            IOptions<AppSettings> appSettings)
+        public UserController(IUserRepository userRepository,IMapper mapper,IOptions<AppSettings> appSettings)
         {
-            _userService = userService;
+            _userRepository = userRepository;
             _mapper = mapper;
             _appSettings = appSettings.Value;
         }
 
         [AllowAnonymous]
-        [HttpPost("authenticate")]
-        public IActionResult Authenticate([FromBody]UserDto userDto)
+        [HttpPost("atenticacion")]
+        public IActionResult Authenticate([FromBody]UserRegisterDto userRegisterDto)
         {
-            var user = _userService.Authenticate(userDto.userName, userDto.password);
+            var user = _userRepository.Authenticate(userRegisterDto.userName, userRegisterDto.password);
 
             if (user == null)
-                return BadRequest(new { message = "Usuario o clave incorrecta." });
+                return BadRequest(new { message = "Usuario o clave incorrecta." }
+            );
 
+            // Generate JWT
             var tokenHandler = new JwtSecurityTokenHandler();
             var key = Encoding.ASCII.GetBytes(_appSettings.Secret);
             var tokenDescriptor = new SecurityTokenDescriptor
@@ -63,22 +62,57 @@ namespace WebApi.Controllers
                 name = user.name,
                 lastName = user.lastName,
                 username = user.userName,
-                estado = user.estado,
+                state = user.state,
                 token = tokenString
             });
         }
 
         [AllowAnonymous]
-        [HttpPost("register")]
-        public IActionResult Register([FromBody]UserDto userDto)
+        [HttpPost("registro")]
+        public IActionResult Register([FromBody]UserRegisterDto userRegisterDto)
         {
             // map dto to entity
-            var user = _mapper.Map<User>(userDto);
+            var user = _mapper.Map<User>(userRegisterDto);
 
             try
             {
                 // save
-                user = _userService.Create(user, userDto.password);
+                user = _userRepository.Create(user, userRegisterDto.password);
+                userRegisterDto = _mapper.Map<UserRegisterDto>(user);
+                return Ok(userRegisterDto);
+            }
+            catch(AppException ex)
+            {
+                // return error message if there was an exception
+                return BadRequest(new { message = ex.Message });
+            }
+        }
+
+        [HttpGet("listar")]
+        public IActionResult GetAll()
+        {
+            var users =  _userRepository.GetAll();
+            var userDtos = _mapper.Map<IList<UserDto>>(users);
+            return Ok(userDtos);
+        }
+
+        [HttpGet("obtener/{id:int}")]
+        public IActionResult GetById(int id)
+        {
+            var user =  _userRepository.GetById(id);
+            var userDto = _mapper.Map<UserDto>(user);
+            return Ok(userDto);
+        }
+
+        [HttpPut("actualizar")]
+        public IActionResult Update([FromBody]UserDto userDto)
+        {
+            // map dto to entity and set id
+            var user = _mapper.Map<User>(userDto);
+
+            try
+            {
+                user =  _userRepository.Update(userDto);
                 userDto = _mapper.Map<UserDto>(user);
                 return Ok(userDto);
             }
@@ -89,47 +123,12 @@ namespace WebApi.Controllers
             }
         }
 
-        [HttpGet]
-        public IActionResult GetAll()
-        {
-            var users =  _userService.GetAll();
-            var userDtos = _mapper.Map<IList<UserDto>>(users);
-            return Ok(userDtos);
-        }
-
-        [HttpGet("{id}")]
-        public IActionResult GetById(int id)
-        {
-            var user =  _userService.GetById(id);
-            var userDto = _mapper.Map<UserDto>(user);
-            return Ok(userDto);
-        }
-
-        [HttpPut("update")]
-        public IActionResult Update([FromBody]UserDto userDto)
-        {
-            // map dto to entity and set id
-            var user = _mapper.Map<User>(userDto);
-
-            try
-            {
-                // save
-                user =  _userService.Update(userDto);
-                userDto = _mapper.Map<UserDto>(user);
-                return Ok();
-            }
-            catch(AppException ex)
-            {
-                // return error message if there was an exception
-                return BadRequest(new { message = ex.Message });
-            }
-        }
-
-        [HttpDelete("{id}")]
+        [HttpDelete("eliminar/{id:int}")]
         public IActionResult Delete(int id)
         {
-            _userService.Delete(id);
-            return Ok();
+            var user = _userRepository.Delete(id);
+            var userDto = _mapper.Map<UserDto>(user);
+            return Ok(userDto);
         }
     }
 }

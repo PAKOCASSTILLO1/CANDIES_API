@@ -1,88 +1,87 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using System.Linq;
+using AutoMapper;
 using WebApi.Helpers;
+using Microsoft.Extensions.Options;
 using WebApi.Entities;
+using WebApi.Repository;
 using Microsoft.AspNetCore.Authorization;
 
 namespace WebApi.Controllers
 {
     [Authorize]
-    [Route("api/[controller]")]
     [ApiController]
+    [Route("api/rol/")]
     public class RoleController : ControllerBase
     {
-        private readonly DataContext _context;
+        private IRoleRepository _roleRepository; // Agregamos repositorio
+        private IMapper _mapper; // Agregamos mapeo de objetos
+        private readonly AppSettings _appSettings; // agregamos clave
 
-        public RoleController(DataContext context)
+        // Constructor lleno
+        public RoleController(IRoleRepository roleRepository,IMapper mapper,IOptions<AppSettings> appSettings)
         {
-            _context = context;
+            _roleRepository = roleRepository;
+            _mapper = mapper;
+            _appSettings = appSettings.Value;
         }
 
-        //GET:      api/rols
-        [HttpGet]
-        public ActionResult<IEnumerable<Role>> GetRoles()
+        [HttpPost("agregar")] // metodo POST para agregar elementos
+        public IActionResult Insert([FromBody]RoleDto roleDto)
         {
-            var array = _context.Role.ToArray();
-            List<Role> rols = new List<Role>();
-            foreach (var rol in array)
+            var role = _mapper.Map<Role>(roleDto);  // Mapear dto a entitidad
+
+            try
             {
-                if (rol.state != false)
-                {
-                    rols.Add(rol);
-                }
+                role = _roleRepository.Insert(role); // Guardamos el elemento
+                roleDto = _mapper.Map<RoleDto>(role);  // Mapear entitidad a dto
+                return Ok(roleDto);
             }
-            return rols;
-        }
-        //GET:      api/rols/n
-        [HttpGet("{id}")]
-        public ActionResult<Role> GetRoleItem(int id)
-        {
-            var rolItem = _context.Role.Find(id);
-
-            if (rolItem == null)
+            catch(AppException ex) // Si ocurre un error...
             {
-                return NotFound();
+                return BadRequest(new { message = ex.Message }); // Retornar mensaje de error
             }
-            return rolItem;
-        }
-        //POST:     api/rols
-        [HttpPost]
-        public ActionResult<Role> PostRoleItem(Role rol)
-        {
-            _context.Role.Add(rol);
-            _context.SaveChanges();
-            return Ok(rol);
         }
 
-        //PUT:      api/rols/n
-        [HttpPut("{id}")]
-        public ActionResult<Role> PutRoleItem(int id, Role rol)
+        [HttpGet("listar")] // metodo GET para listar elementos
+        public IActionResult GetAll()
         {
-            if (id != rol.idRole)
+            var roles =  _roleRepository.GetAll(); // Listamos elementos
+            var roleDtos = _mapper.Map<IList<RoleDto>>(roles); // Mapear entitidad a dto
+            return Ok(roleDtos);
+        }
+
+        [HttpGet("obtener/{id:int}")] // metodo GET para mostrar elemento por id
+        public IActionResult GetById(int id)
+        {
+            var role =  _roleRepository.GetById(id); // Buscamos el elemento
+            var roleDto = _mapper.Map<RoleDto>(role); // Mapear entitidad a dto
+            return Ok(roleDto);
+        }
+
+        [HttpPut("actualizar")] // metodo PUT para actualizar elemento
+        public IActionResult Update([FromBody]RoleDto roleDto)
+        {
+            var role = _mapper.Map<Role>(roleDto); // Mapear dto a entitidad
+
+            try
             {
-                return BadRequest();
+                role =  _roleRepository.Update(roleDto); // Actualizamos el elemento
+                roleDto = _mapper.Map<RoleDto>(role); // Mapear entitidad a dto
+                return Ok(roleDto);
             }
-            _context.Entry(rol).State = EntityState.Modified;
-            _context.SaveChanges();
-            var rolItem = _context.Role.Find(id);
-            return rolItem;
+            catch(AppException ex)
+            {
+                return BadRequest(new { message = ex.Message }); // Retornar mensaje de error
+            }
         }
 
-        //DELETE:   api/rols/n
-        [HttpDelete("{id}")]
-        public ActionResult<Role> DeleteRoleItem(int id)
+        [HttpDelete("eliminar/{id:int}")] // Metodo DELETE para eliminar elemento
+        public IActionResult Delete(int id)
         {
-            var rolItem = _context.Role.Find(id);
-
-            if (rolItem == null)
-            {
-                return NotFound();
-            }
-            rolItem.state = false;
-            _context.SaveChanges();
-            return rolItem;
+            var role = _roleRepository.Delete(id); // Eliminar elemento
+            var roleDto = _mapper.Map<RoleDto>(role); // Mapear entitidad a dto
+            return Ok(roleDto);
         }
     }
 }

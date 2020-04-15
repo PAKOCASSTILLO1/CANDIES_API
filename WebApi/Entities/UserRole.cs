@@ -7,6 +7,11 @@ namespace WebApi.Entities
 {
     public class UserRole
     {
+        public UserRole()
+        {
+            this.state = true;
+        }
+
         [Key]
         public int idUserRole { get; set; }
 

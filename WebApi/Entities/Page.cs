@@ -4,6 +4,11 @@ using System.ComponentModel.DataAnnotations;
 
 namespace WebApi.Entities{
     public class Page {
+        public Page()
+        {
+            this.state = true;
+        }
+
         [Key]
         public int idPage { get; set; }
 

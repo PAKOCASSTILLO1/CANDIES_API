@@ -1,97 +1,87 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using System.Linq;
+using AutoMapper;
 using WebApi.Helpers;
-using WebApi.Entities;
+using Microsoft.Extensions.Options;
 using Microsoft.AspNetCore.Authorization;
+using WebApi.Entities;
+using WebApi.Repository;
 
 namespace WebApi.Controllers
 {
     [Authorize]
-    [Route("api/[controller]")]
     [ApiController]
+    [Route("api/rolpagina/")]
     public class RolePageController : ControllerBase
     {
-        private readonly DataContext _context;
+        private IRolePageRepository _rolePageRepository; // Agregamos repositorio
+        private IMapper _mapper; // Agregamos mapeo de objetos
+        private readonly AppSettings _appSettings; // agregamos clave
 
-        public RolePageController(DataContext context)
+        // Constructor lleno
+        public RolePageController(IRolePageRepository rolePageRepository,IMapper mapper,IOptions<AppSettings> appSettings)
         {
-            _context = context;
+            _rolePageRepository = rolePageRepository;
+            _mapper = mapper;
+            _appSettings = appSettings.Value;
         }
 
-        //GET:      api/rolePages
-        [HttpGet]
-        public ActionResult<IEnumerable<RolePage>> GetRolePages()
+        [HttpPost("agregar")] // metodo POST para agregar elementos
+        public IActionResult Insert([FromBody]RolePageDto rolePageDto)
         {
-            var array = _context.RolePage.ToArray();
-            List<RolePage> rolePages = new List<RolePage>();
-            foreach (var rolePage in array)
+            var rolePage = _mapper.Map<RolePage>(rolePageDto);  // Mapear dto a entitidad
+
+            try
             {
-                if (rolePage.state != false)
-                {
-                    rolePages.Add(rolePage);
-                }
+                rolePage = _rolePageRepository.Insert(rolePage); // Guardamos el elemento
+                rolePageDto = _mapper.Map<RolePageDto>(rolePage);  // Mapear entitidad a dto
+                return Ok(rolePageDto);
             }
-            return rolePages;
-        }
-        
-        //GET:      api/rolePages/n
-        [HttpGet("{id}")]
-        public ActionResult<RolePage> GetRolePageItem(int id)
-        {
-            var rolePageItem = _context.RolePage.Find(id);
-
-            if (rolePageItem == null) 
+            catch(AppException ex) // Si ocurre un error...
             {
-                return NotFound();
+                return BadRequest(new { message = ex.Message }); // Retornar mensaje de error
             }
-
-            return rolePageItem;
-        }
-        
-        //POST:     api/rolePages
-        [HttpPost]
-        public ActionResult<RolePage> PostRolePageItem(RolePage rolePage)
-        {
-            _context.RolePage.Add(rolePage);
-            _context.SaveChanges();
-
-            //return CreatedAtAction("GetRolePageItem", new RolePage{idRolePage = rolePage.idRolePage}, rolePage);
-            //return CreatedAtAction("GetRolePageItem", new RolePage{idRolePage = rolePage.idRolePage}, rolePage);
-            return Ok(rolePage);
         }
 
-        //PUT:      api/rolePages/n
-        [HttpPut("{id}")]
-        public ActionResult<RolePage> PutRolePageItem(int id, RolePage rolePage)
+        [HttpGet("listar")] // metodo GET para listar elementos
+        public IActionResult GetAll()
         {
-            if (id != rolePage.idRolePage)
+            var rolePages =  _rolePageRepository.GetAll(); // Listamos elementos
+            var rolePageDtos = _mapper.Map<IList<RolePageDto>>(rolePages); // Mapear entitidad a dto
+            return Ok(rolePageDtos);
+        }
+
+        [HttpGet("obtener/{id:int}")] // metodo GET para mostrar elemento por id
+        public IActionResult GetById(int id)
+        {
+            var rolePage =  _rolePageRepository.GetById(id); // Buscamos el elemento
+            var rolePageDto = _mapper.Map<RolePageDto>(rolePage); // Mapear entitidad a dto
+            return Ok(rolePageDto);
+        }
+
+        [HttpPut("actualizar")] // metodo PUT para actualizar elemento
+        public IActionResult Update([FromBody]RolePageDto rolePageDto)
+        {
+            var rolePage = _mapper.Map<RolePage>(rolePageDto); // Mapear dto a entitidad
+
+            try
             {
-                return BadRequest();
+                rolePage =  _rolePageRepository.Update(rolePageDto); // Actualizamos el elemento
+                rolePageDto = _mapper.Map<RolePageDto>(rolePage); // Mapear entitidad a dto
+                return Ok(rolePageDto);
             }
-
-            _context.Entry(rolePage).State = EntityState.Modified;
-            _context.SaveChanges();
-            var rolePageItem = _context.RolePage.Find(id);
-            return rolePageItem;
+            catch(AppException ex)
+            {
+                return BadRequest(new { message = ex.Message }); // Retornar mensaje de error
+            }
         }
 
-        //DELETE:   api/rolePages/n
-        [HttpDelete("{id}")]
-        public ActionResult<RolePage> DeleteRolePageItem(int id)
+        [HttpDelete("eliminar/{id:int}")] // Metodo DELETE para eliminar elemento
+        public IActionResult Delete(int id)
         {
-            var rolePageItem = _context.RolePage.Find(id);
-
-            if (rolePageItem == null)
-            {
-                return NotFound();
-            }
-            rolePageItem.state = false;
-            //_context.RolePage.Remove(rolePageItem);
-            _context.SaveChanges();
-
-            return rolePageItem;
+            var rolePage = _rolePageRepository.Delete(id); // Eliminar elemento
+            var rolePageDto = _mapper.Map<RolePageDto>(rolePage); // Mapear entitidad a dto
+            return Ok(rolePageDto);
         }
     }
 }

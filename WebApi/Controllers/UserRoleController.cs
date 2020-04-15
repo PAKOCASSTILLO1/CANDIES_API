@@ -1,88 +1,87 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using System.Linq;
+using AutoMapper;
 using WebApi.Helpers;
+using Microsoft.Extensions.Options;
 using Microsoft.AspNetCore.Authorization;
 using WebApi.Entities;
+using WebApi.Repository;
 
 namespace WebApi.Controllers
 {
     [Authorize]
-    [Route("api/[controller]")]
     [ApiController]
+    [Route("api/usuarioRol/")]
     public class UserRoleController : ControllerBase
     {
-        private readonly DataContext _context;
+        private IUserRoleRepository _userRoleRepository; // Agregamos repositorio
+        private IMapper _mapper; // Agregamos mapeo de objetos
+        private readonly AppSettings _appSettings; // agregamos clave
 
-        public UserRoleController(DataContext context)
+        // Constructor lleno
+        public UserRoleController(IUserRoleRepository userRoleRepository,IMapper mapper,IOptions<AppSettings> appSettings)
         {
-            _context = context;
+            _userRoleRepository = userRoleRepository;
+            _mapper = mapper;
+            _appSettings = appSettings.Value;
         }
 
-        //GET:      api/rols
-        [HttpGet]
-        public ActionResult<IEnumerable<UserRole>> GetUserRole()
+        [HttpPost("agregar")] // metodo POST para agregar elementos
+        public IActionResult Insert([FromBody]UserRoleDto userRoleDto)
         {
-            var array = _context.UserRole.ToArray();
-            List<UserRole> userRoles = new List<UserRole>();
-            foreach (var UserRole in array)
+            var userRole = _mapper.Map<UserRole>(userRoleDto);  // Mapear dto a entitidad
+
+            try
             {
-                if (UserRole.state != false)
-                {
-                    userRoles.Add(UserRole);
-                }
+                userRole = _userRoleRepository.Insert(userRole); // Guardamos el elemento
+                userRoleDto = _mapper.Map<UserRoleDto>(userRole);  // Mapear entitidad a dto
+                return Ok(userRoleDto);
             }
-            return userRoles;
-        }
-        //GET:      api/rols/n
-        [HttpGet("{id}")]
-        public ActionResult<UserRole> GetUserRoleItem(int id)
-        {
-            var userRoleItem = _context.UserRole.Find(id);
-
-            if (userRoleItem == null)
+            catch(AppException ex) // Si ocurre un error...
             {
-                return NotFound();
+                return BadRequest(new { message = ex.Message }); // Retornar mensaje de error
             }
-            return userRoleItem;
-        }
-        //POST:     api/rols
-        [HttpPost]
-        public ActionResult<UserRole> PostUserRoleItem(UserRole UserRole)
-        {
-            _context.UserRole.Add(UserRole);
-            _context.SaveChanges();
-            return Ok(UserRole);
         }
 
-        //PUT:      api/rols/n
-        [HttpPut("{id}")]
-        public ActionResult<UserRole> PutUserRoleItem(int id, UserRole UserRole)
+        [HttpGet("listar")] // metodo GET para listar elementos
+        public IActionResult GetAll()
         {
-            if (id != UserRole.idUserRole)
+            var userRoles =  _userRoleRepository.GetAll(); // Listamos elementos
+            var userRoleDtos = _mapper.Map<IList<UserRoleDto>>(userRoles); // Mapear entitidad a dto
+            return Ok(userRoleDtos);
+        }
+
+        [HttpGet("obtener/{id:int}")] // metodo GET para mostrar elemento por id
+        public IActionResult GetById(int id)
+        {
+            var userRole =  _userRoleRepository.GetById(id); // Buscamos el elemento
+            var userRoleDto = _mapper.Map<UserRoleDto>(userRole); // Mapear entitidad a dto
+            return Ok(userRoleDto);
+        }
+
+        [HttpPut("actualizar")] // metodo PUT para actualizar elemento
+        public IActionResult Update([FromBody]UserRoleDto userRoleDto)
+        {
+            var userRole = _mapper.Map<UserRole>(userRoleDto); // Mapear dto a entitidad
+
+            try
             {
-                return BadRequest();
+                userRole =  _userRoleRepository.Update(userRoleDto); // Actualizamos el elemento
+                userRoleDto = _mapper.Map<UserRoleDto>(userRole); // Mapear entitidad a dto
+                return Ok(userRoleDto);
             }
-            _context.Entry(UserRole).State = EntityState.Modified;
-            _context.SaveChanges();
-            var userRoleItem = _context.UserRole.Find(id);
-            return userRoleItem;
+            catch(AppException ex)
+            {
+                return BadRequest(new { message = ex.Message }); // Retornar mensaje de error
+            }
         }
 
-        //DELETE:   api/rols/n
-        [HttpDelete("{id}")]
-        public ActionResult<UserRole> DeleteUserRoleItem(int id)
+        [HttpDelete("eliminar/{id:int}")] // Metodo DELETE para eliminar elemento
+        public IActionResult Delete(int id)
         {
-            var userRoleItem = _context.UserRole.Find(id);
-
-            if (userRoleItem == null)
-            {
-                return NotFound();
-            }
-            userRoleItem.state = false;
-            _context.SaveChanges();
-            return userRoleItem;
+            var userRole = _userRoleRepository.Delete(id); // Eliminar elemento
+            var userRoleDto = _mapper.Map<UserRoleDto>(userRole); // Mapear entitidad a dto
+            return Ok(userRoleDto);
         }
     }
 }

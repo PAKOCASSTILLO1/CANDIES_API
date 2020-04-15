@@ -1,88 +1,87 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using System.Linq;
+using AutoMapper;
 using WebApi.Helpers;
-using WebApi.Entities;
+using Microsoft.Extensions.Options;
 using Microsoft.AspNetCore.Authorization;
+using WebApi.Entities;
+using WebApi.Repository;
 
 namespace WebApi.Controllers
 {
     [Authorize]
-    [Route("api/[controller]")]
     [ApiController]
+    [Route("api/pagina/")]
     public class PageController : ControllerBase
     {
-        private readonly DataContext _context;
+        private IPageRepository _pageRepository; // Agregamos repositorio
+        private IMapper _mapper; // Agregamos mapeo de objetos
+        private readonly AppSettings _appSettings; // agregamos clave
 
-        public PageController(DataContext context)
+        // Constructor lleno
+        public PageController(IPageRepository pageRepository,IMapper mapper,IOptions<AppSettings> appSettings)
         {
-            _context = context;
+            _pageRepository = pageRepository;
+            _mapper = mapper;
+            _appSettings = appSettings.Value;
         }
 
-        //GET:      api/rols
-        [HttpGet]
-        public ActionResult<IEnumerable<Page>> GetPages()
+        [HttpPost("agregar")] // metodo POST para agregar elementos
+        public IActionResult Insert([FromBody]PageDto pageDto)
         {
-            var array = _context.Page.ToArray();
-            List<Page> pages = new List<Page>();
-            foreach (var page in array)
+            var page = _mapper.Map<Page>(pageDto);  // Mapear dto a entitidad
+
+            try
             {
-                if (page.state != false)
-                {
-                    pages.Add(page);
-                }
+                page = _pageRepository.Insert(page); // Guardamos el elemento
+                pageDto = _mapper.Map<PageDto>(page);  // Mapear entitidad a dto
+                return Ok(pageDto);
             }
-            return pages;
-        }
-        //GET:      api/rols/n
-        [HttpGet("{id}")]
-        public ActionResult<Page> GetPageItem(int id)
-        {
-            var pageItem = _context.Page.Find(id);
-
-            if (pageItem == null)
+            catch(AppException ex) // Si ocurre un error...
             {
-                return NotFound();
+                return BadRequest(new { message = ex.Message }); // Retornar mensaje de error
             }
-            return pageItem;
-        }
-        //POST:     api/rols
-        [HttpPost]
-        public ActionResult<Page> PostPageItem(Page page)
-        {
-            _context.Page.Add(page);
-            _context.SaveChanges();
-            return Ok(page);
         }
 
-        //PUT:      api/rols/n
-        [HttpPut("{id}")]
-        public ActionResult<Page> PutPageItem(int id, Page page)
+        [HttpGet("listar")] // metodo GET para listar elementos
+        public IActionResult GetAll()
         {
-            if (id != page.idPage)
+            var pages =  _pageRepository.GetAll(); // Listamos elementos
+            var pageDtos = _mapper.Map<IList<PageDto>>(pages); // Mapear entitidad a dto
+            return Ok(pageDtos);
+        }
+
+        [HttpGet("obtener/{id:int}")] // metodo GET para mostrar elemento por id
+        public IActionResult GetById(int id)
+        {
+            var page =  _pageRepository.GetById(id); // Buscamos el elemento
+            var pageDto = _mapper.Map<PageDto>(page); // Mapear entitidad a dto
+            return Ok(pageDto);
+        }
+
+        [HttpPut("actualizar")] // metodo PUT para actualizar elemento
+        public IActionResult Update([FromBody]PageDto pageDto)
+        {
+            var page = _mapper.Map<Page>(pageDto); // Mapear dto a entitidad
+
+            try
             {
-                return BadRequest();
+                page =  _pageRepository.Update(pageDto); // Actualizamos el elemento
+                pageDto = _mapper.Map<PageDto>(page); // Mapear entitidad a dto
+                return Ok(pageDto);
             }
-            _context.Entry(page).State = EntityState.Modified;
-            _context.SaveChanges();
-            var pageItem = _context.Page.Find(id);
-            return pageItem;
+            catch(AppException ex)
+            {
+                return BadRequest(new { message = ex.Message }); // Retornar mensaje de error
+            }
         }
 
-        //DELETE:   api/rols/n
-        [HttpDelete("{id}")]
-        public ActionResult<Page> DeletePageItem(int id)
+        [HttpDelete("eliminar/{id:int}")] // Metodo DELETE para eliminar elemento
+        public IActionResult Delete(int id)
         {
-            var pageItem = _context.Page.Find(id);
-
-            if (pageItem == null)
-            {
-                return NotFound();
-            }
-            pageItem.state = false;
-            _context.SaveChanges();
-            return pageItem;
+            var page = _pageRepository.Delete(id); // Eliminar elemento
+            var pageDto = _mapper.Map<PageDto>(page); // Mapear entitidad a dto
+            return Ok(pageDto);
         }
     }
 }

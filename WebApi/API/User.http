@@ -1,15 +1,4 @@
-POST http://localhost:4000/api/user/register HTTP/1.1
-content-type: application/json
-
-{
-    "Name": "FR",
-    "Lastname": "CG",
-    "Username": "PAKO2",
-    "Password": "1234"
-}
-
-###
-POST http://localhost:4000/api/user/authenticate HTTP/1.1
+POST http://localhost:4000/api/usuario/atenticacion HTTP/1.1
 content-type: application/json
 
 {
@@ -18,17 +7,47 @@ content-type: application/json
 }
 
 ###
-GET http://localhost:4000/api/user HTTP/1.1
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6IjEiLCJuYmYiOjE1ODU2NTMyNzEsImV4cCI6MTU4NTY2MDQ3MSwiaWF0IjoxNTg1NjUzMjcxfQ.1CUA0PfH5KZXHKnmTvlH_ys3qsZd8S9olH17dL5s-kc
+POST http://localhost:4000/api/usuario/registro HTTP/1.1
+content-type: application/json
+
+{
+    "name": "FR",
+    "lastname": "CG",
+    "username": "PAKO5",
+    "password": "1234"
+}
 
 ###
-GET http://localhost:4000/api/user/1 HTTP/1.1
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6IjEiLCJuYmYiOjE1ODU2NTI4MTcsImV4cCI6MTU4NTY2MDAxNywiaWF0IjoxNTg1NjUyODE3fQ.mo8Ra8FUD5AS6mqk5l93B0c8yav_aychv7VO8qIAdlU
+GET http://localhost:4000/api/usuario/listar HTTP/1.1
+content-type: application/json
+//Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6IjEiLCJuYmYiOjE1ODY5NTgxNDEsImV4cCI6MTU4Njk2NTM0MSwiaWF0IjoxNTg2OTU4MTQxfQ.roqqHZ79MvD781S6SekebSfXj0fsrttPBafy6_Vmbn8
+
+###
+GET http://localhost:4000/api/usuario/obtener/5 HTTP/1.1
+content-type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6IjEiLCJuYmYiOjE1ODY5NTgxNDEsImV4cCI6MTU4Njk2NTM0MSwiaWF0IjoxNTg2OTU4MTQxfQ.roqqHZ79MvD781S6SekebSfXj0fsrttPBafy6_Vmbn8
+
+###
+PUT http://localhost:4000/api/usuario/actualizar HTTP/1.1
+content-type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6IjEiLCJuYmYiOjE1ODY5NTgxNDEsImV4cCI6MTU4Njk2NTM0MSwiaWF0IjoxNTg2OTU4MTQxfQ.roqqHZ79MvD781S6SekebSfXj0fsrttPBafy6_Vmbn8
+
+{
+    "idUser": 5,
+    "name": "FR5",
+    "lastName": "CG5",
+    "userName": "PAKO5"
+  }
+###
+DELETE  http://localhost:4000/api/usuario/eliminar/5 HTTP/1.1
+content-type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6IjEiLCJuYmYiOjE1ODY5NTgxNDEsImV4cCI6MTU4Njk2NTM0MSwiaWF0IjoxNTg2OTU4MTQxfQ.roqqHZ79MvD781S6SekebSfXj0fsrttPBafy6_Vmbn8
 
 # {
 #   "idUser": 1,
 #   "name": "FR",
-#   "lastname": "CG",
+#   "lastName": "CG",
 #   "username": "PAKO1",
-#   "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6IjEiLCJuYmYiOjE1ODU2NTMyNzEsImV4cCI6MTU4NTY2MDQ3MSwiaWF0IjoxNTg1NjUzMjcxfQ.1CUA0PfH5KZXHKnmTvlH_ys3qsZd8S9olH17dL5s-kc"
+#   "state": true,
+#   "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6IjEiLCJuYmYiOjE1ODY5NTgxNDEsImV4cCI6MTU4Njk2NTM0MSwiaWF0IjoxNTg2OTU4MTQxfQ.roqqHZ79MvD781S6SekebSfXj0fsrttPBafy6_Vmbn8"
 # }

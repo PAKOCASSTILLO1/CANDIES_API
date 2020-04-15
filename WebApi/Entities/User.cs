@@ -3,6 +3,11 @@ namespace WebApi.Entities
 {
     public class User
     {
+        public User()
+        {
+            this.state = true;
+        }
+
         [Key]
         public int idUser { get; set; }
 
@@ -16,6 +21,6 @@ namespace WebApi.Entities
         public string userName { get; set; }
         public byte[] passwordHash { get; set; }
         public byte[] passwordSalt { get; set; }
-        public byte estado { get; set; }
+        public bool state { get; set; }
     }
 }
