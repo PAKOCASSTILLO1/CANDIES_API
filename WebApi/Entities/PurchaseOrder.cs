@@ -20,7 +20,7 @@ namespace WebApi.Entities
         public int idProvider {set; get;}
 
         [JsonIgnore]
-        public Providerr provider {get;set;}
+        public Provider provider {get;set;}
 
     }
 }

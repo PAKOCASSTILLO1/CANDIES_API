@@ -2,7 +2,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace WebApi.Entities
 {
-    public class Providerr
+    public class Provider
     {
         [Key]
         public int idProvider {get; set;}

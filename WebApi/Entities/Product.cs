@@ -23,7 +23,7 @@ namespace WebApi.Entities
         public bool state {get;set;}
 
         [JsonIgnore]
-        public Providerr provider {get;set;}
+        public Provider provider {get;set;}
 
         [JsonIgnore]
         public ProductType productType {get;set;}

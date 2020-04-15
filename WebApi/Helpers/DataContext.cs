@@ -17,7 +17,7 @@ namespace WebApi.Helpers
         public DbSet<Person> Person { get; set; }
         public DbSet<Product> Product { get; set; }
         public DbSet<ProductType> ProductType { get; set; }
-        public DbSet<Providerr> Provider { get; set; }
+        public DbSet<Provider> Provider { get; set; }
         public DbSet<PurchaseDetail> PurchaseDetail { get; set; }
         public DbSet<PurchaseOrder> PurchaseOrder { get; set; }
         public DbSet<Role> Role { get; set; }
