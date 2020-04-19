@@ -61,8 +61,7 @@ namespace WebApi.Services
                 throw new AppException("Rol no existe.");
 
             // actualizamos dato
-            rolePage.idRole = rolePageParam.idRole;
-            rolePage.idPage = rolePageParam.idPage;
+            rolePage.update(rolePageParam, _context);
 
             // Guardar cambios
             _context.RolePage.Update(rolePage);

@@ -1,9 +1,26 @@
 using System.ComponentModel.DataAnnotations;
+using WebApi.Helpers;
 
 namespace WebApi.Entities
 {
     public class Provider
     {
+        public Provider()
+        {
+            this.state = true;
+        }
+
+        public void update(ProviderDto dto, DataContext context)
+        {
+            this.nameProvider = dto.nameProvider;
+            this.reason = dto.reason;
+            this.nit = dto.nit;
+            this.address = dto.address;
+            this.email = dto.email;
+            this.typeProvider = dto.typeProvider;
+            this.state = true;
+        }
+
         [Key]
         public int idProvider {get; set;}
 

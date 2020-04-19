@@ -1,11 +1,33 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Newtonsoft.Json;
+using WebApi.Helpers;
 
 namespace WebApi.Entities
 {
     public class Client
     {
+        [JsonIgnore]
+        private DataContext _context;
+        public Client()
+        {
+            this.state = true;
+        }
+
+        public void update(ClientDto dto, DataContext context)
+        {
+            _context = context;
+            this.name = dto.name;
+            this.address = dto.address;
+            this.coordinate = dto.coordinate;
+            this.nit = dto.nit;
+            this.wholesaler = dto.wholesaler;
+            this.email = dto.email;
+            this.idPerson = dto.idPerson;
+            this.urlPage = dto.urlPage;
+            this.person = _context.Person.Find(dto.idPerson);
+        }
+
         [Key]
         public int idClient {get;set;}
 

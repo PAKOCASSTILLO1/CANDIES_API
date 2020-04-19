@@ -73,7 +73,7 @@ namespace WebApi.Services
             }
 
             // actualizamos dato
-            role.description = roleParam.description;
+            role.update(roleParam, _context);
 
             // Guardar cambios
             _context.Role.Update(role);

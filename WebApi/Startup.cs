@@ -76,11 +76,25 @@ namespace WebApi
             });
 
             // configure DI for application services
-            services.AddScoped<IUserRepository, UserService>();
-            services.AddScoped<IRoleRepository, RoleService>();
-            services.AddScoped<IPageRepository, PageService>();
-            services.AddScoped<IUserRoleRepository, UserRoleService>();
-            services.AddScoped<IRolePageRepository, RolePageService>();
+            services.AddScoped<IUserRepository, UserService>(); // User
+            services.AddScoped<IRoleRepository, RoleService>(); // Role
+            services.AddScoped<IPageRepository, PageService>(); // Page
+            services.AddScoped<IUserRoleRepository, UserRoleService>();  // UserRole
+            services.AddScoped<IRolePageRepository, RolePageService>();  // RolePage
+            services.AddScoped<IProviderRepository, ProviderService>(); // Provider
+            services.AddScoped<IProductRepository, ProductService>(); // Product
+            services.AddScoped<IProductTypeRepository, ProductTypeService>(); // Product
+            services.AddScoped<IOperationProductEntryRepository, OperationProductEntryService>();  // OperationProductEntry
+            services.AddScoped<IOperationProductOutputRepository, OperationProductOutputService>();  // OperationProductOutput
+            services.AddScoped<IPurchaseOrderRepository, PurchaseOrderService>(); // PurchaseOrder
+            services.AddScoped<IPurchaseDetailRepository, PurchaseDetailService>(); // PurchaseDetail
+            services.AddScoped<IStatusMachineRepository, StatusMachineService>(); // StatusMachine
+            services.AddScoped<IMachineRepository, MachineService>(); // Machine
+            services.AddScoped<IPersonRepository, PersonService>(); // Person
+            services.AddScoped<IClientRepository, ClientService>(); // Client
+            services.AddScoped<IClientMachineRepository, ClientMachineService>(); // ClientMachine
+            services.AddScoped<INotificationRepository, NotificationService>(); // Notification
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

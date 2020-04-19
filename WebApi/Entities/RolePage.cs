@@ -2,14 +2,27 @@ using Newtonsoft.Json;
 using System;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
+using WebApi.Helpers;
 
 namespace WebApi.Entities
 {
     public class RolePage
     {
+        [JsonIgnore]
+        private DataContext _context;
         public RolePage()
         {
             this.state = true;
+        }
+
+        public void update(RolePageDto dto, DataContext context)
+        {
+            this._context = context;
+            this.idRole = dto.idRole;
+            this.idPage = dto.idPage;
+            this.state = true;
+            this.role = _context.Role.Find(dto.idRole);
+            this.page = _context.Page.Find(dto.idPage);
         }
 
         [Key]

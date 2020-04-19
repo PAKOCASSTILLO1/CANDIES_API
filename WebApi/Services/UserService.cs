@@ -91,9 +91,7 @@ namespace WebApi.Services
             }
 
             // update user properties
-            user.name = userParam.name;
-            user.lastName = userParam.lastName;
-            user.userName = userParam.userName;
+            user.update(userParam);
 
             // update password if it was entered
             // if (!string.IsNullOrWhiteSpace(userParam.password))

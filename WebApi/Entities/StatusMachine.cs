@@ -4,6 +4,11 @@ namespace WebApi.Entities
 {
     public class StatusMachine
     {
+        public void update(StatusMachineDto dto)
+        {
+            this.description = dto.description;
+        }
+
         [Key]
         public int idStatusMachine {get;set;}
 

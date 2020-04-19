@@ -58,11 +58,10 @@ namespace WebApi.Services
 
             // verificamos q existe
             if (userRole == null)
-                throw new AppException("Rol no existe.");
+                throw new AppException("Usuario-rol no existe.");
 
             // actualizamos dato
-            userRole.idRole = userRoleParam.idRole;
-            userRole.idUser = userRoleParam.idUser;
+            userRole.update(userRoleParam, _context);
 
             // Guardar cambios
             _context.UserRole.Update(userRole);

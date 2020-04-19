@@ -73,7 +73,7 @@ namespace WebApi.Services
             }
 
             // actualizamos dato
-            page.description = pageParam.description;
+            page.update(pageParam, _context);
 
             // Guardar cambios
             _context.Page.Update(page);

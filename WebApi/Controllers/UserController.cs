@@ -15,7 +15,7 @@ using WebApi.Repository;
 
 namespace WebApi.Controllers
 {
-    [Authorize]
+    //[Authorize]
     [ApiController]
     [Route("api/usuario/")]
     public class UserController : ControllerBase

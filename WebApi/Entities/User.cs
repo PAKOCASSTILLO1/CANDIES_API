@@ -1,10 +1,20 @@
 using System.ComponentModel.DataAnnotations;
+using WebApi.Dtos;
+
 namespace WebApi.Entities
 {
     public class User
     {
         public User()
         {
+            this.state = true;
+        }
+
+        public void update(UserDto dto)
+        {
+            this.name = name;
+            this.lastName = lastName;
+            this.userName = userName;
             this.state = true;
         }
 

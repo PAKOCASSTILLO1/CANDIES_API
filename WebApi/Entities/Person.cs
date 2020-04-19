@@ -3,6 +3,19 @@ namespace WebApi.Entities
 {
     public class Person
     {
+        public Person()
+        {
+            this.state = true;
+        }
+
+        public void update(PersonDto dto)
+        {
+            this.name = dto.name;
+            this.telephone = dto.telephone;
+            this.address = dto.address;
+            this.email = dto.email;
+        }
+
         [Key]
         public int idPerson {get;set;}
 
