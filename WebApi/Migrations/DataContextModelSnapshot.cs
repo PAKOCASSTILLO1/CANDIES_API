@@ -25,6 +25,14 @@ namespace WebApi.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<DateTime>("Fecha_Creo");
+
+                    b.Property<DateTime?>("Fecha_Modifico");
+
+                    b.Property<int>("Usuario_Creo");
+
+                    b.Property<int?>("Usuario_Modifico");
+
                     b.Property<string>("address")
                         .HasMaxLength(200);
 
@@ -61,6 +69,14 @@ namespace WebApi.Migrations
                     b.Property<int>("idClientMachine")
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<DateTime>("Fecha_Creo");
+
+                    b.Property<DateTime?>("Fecha_Modifico");
+
+                    b.Property<int>("Usuario_Creo");
+
+                    b.Property<int?>("Usuario_Modifico");
 
                     b.Property<DateTime>("dateAssignment");
 
@@ -129,6 +145,14 @@ namespace WebApi.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<DateTime>("Fecha_Creo");
+
+                    b.Property<DateTime?>("Fecha_Modifico");
+
+                    b.Property<int>("Usuario_Creo");
+
+                    b.Property<int?>("Usuario_Modifico");
+
                     b.Property<DateTime>("dateOperation");
 
                     b.Property<DateTime>("dateOperationEntry");
@@ -155,6 +179,14 @@ namespace WebApi.Migrations
                     b.Property<int>("idOperationOutput")
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<DateTime>("Fecha_Creo");
+
+                    b.Property<DateTime?>("Fecha_Modifico");
+
+                    b.Property<int>("Usuario_Creo");
+
+                    b.Property<int?>("Usuario_Modifico");
 
                     b.Property<DateTime>("dateOperation");
 
@@ -270,6 +302,14 @@ namespace WebApi.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<DateTime>("Fecha_Creo");
+
+                    b.Property<DateTime?>("Fecha_Modifico");
+
+                    b.Property<int>("Usuario_Creo");
+
+                    b.Property<int?>("Usuario_Modifico");
+
                     b.Property<string>("address")
                         .HasMaxLength(200);
 
@@ -299,6 +339,14 @@ namespace WebApi.Migrations
                     b.Property<int>("idPurchaseDetail")
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<DateTime>("Fecha_Creo");
+
+                    b.Property<DateTime?>("Fecha_Modifico");
+
+                    b.Property<int>("Usuario_Creo");
+
+                    b.Property<int?>("Usuario_Modifico");
 
                     b.Property<int>("idProduct");
 
@@ -379,6 +427,14 @@ namespace WebApi.Migrations
                     b.Property<int>("idStatusMachine")
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<DateTime>("Fecha_Creo");
+
+                    b.Property<DateTime?>("Fecha_Modifico");
+
+                    b.Property<int>("Usuario_Creo");
+
+                    b.Property<int?>("Usuario_Modifico");
 
                     b.Property<string>("description")
                         .HasMaxLength(50);

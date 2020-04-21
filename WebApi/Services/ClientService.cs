@@ -42,12 +42,13 @@ namespace WebApi.Services
         }
 
         // Insertar elementos en la base de datos
-        public Client Insert(Client client)
+        public Client Insert(Client client, string id)
         {
             // Validar si ya existe
             if (_context.Client.Any(x => x.name == client.name))
                 throw new AppException("El cliente \"" + client.name + "\" ya existe.");
 
+            client.auditInsert(id);
             // Guardar elemento
             _context.Client.Add(client);
             _context.SaveChanges();
@@ -55,7 +56,7 @@ namespace WebApi.Services
         }
 
         // Actualizar elemento
-        public Client Update(ClientDto clientParam)
+        public Client Update(ClientDto clientParam, string id)
         {
             // Buscamos elemento a modificar
             var client = _context.Client.Find(clientParam.idClient);
@@ -74,6 +75,7 @@ namespace WebApi.Services
 
             // actualizamos dato
             client.update(clientParam, _context);
+            client.auditUpdate(id);
 
             // Guardar cambios
             _context.Client.Update(client);
@@ -82,7 +84,7 @@ namespace WebApi.Services
         }
 
         // Eliminar elemento (Cambiar a inactivo)
-        public Client Delete(int id)
+        public Client Delete(int id, string ids)
         {
             // Buscamos elemento a eliminar
             var client = _context.Client.Find(id);
@@ -95,11 +97,27 @@ namespace WebApi.Services
 
             // cambiamos estado
             client.state = false;
+            client.auditUpdate(ids);
 
             // Guardamos cambios
             _context.Client.Update(client);
             _context.SaveChanges();
             return client;
+        }
+
+        public Client Insert(Client body)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Client Update(ClientDto body)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Client Delete(int id)
+        {
+            throw new NotImplementedException();
         }
     }
 }

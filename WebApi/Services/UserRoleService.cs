@@ -89,5 +89,20 @@ namespace WebApi.Services
             _context.SaveChanges();
             return userRole;
         }
+
+        public UserRole Insert(UserRole body, string id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public UserRole Update(UserRoleDto body, string id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public UserRole Delete(int id, string ids)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

@@ -11,7 +11,7 @@ using System.Globalization;
 
 namespace WebApi.Controllers
 {
-    //[Authorize]
+    [Authorize]
     [ApiController]
     [Route("api/operacionProductoEntrada/")]
     public class OperationProductEntryController : ControllerBase
@@ -35,7 +35,7 @@ namespace WebApi.Controllers
             operation.dateOperation = DateTime.ParseExact(dto.dateOperation, "dd/MM/yyyy", CultureInfo.InvariantCulture);
             try
             {
-                operation = _operationProductEntryRepository.Insert(operation); // Guardamos el elemento
+                operation = _operationProductEntryRepository.Insert(operation, HttpContext.User.Identity.Name); // Guardamos el elemento
                 dto = _mapper.Map<OperationProductEntryDto>(operation);  // Mapear entitidad a dto
                 return Ok(dto);
             }
@@ -68,7 +68,7 @@ namespace WebApi.Controllers
 
             try
             {
-                operationProductEntry =  _operationProductEntryRepository.Update(operationProductEntryDto); // Actualizamos el elemento
+                operationProductEntry =  _operationProductEntryRepository.Update(operationProductEntryDto, HttpContext.User.Identity.Name); // Actualizamos el elemento
                 operationProductEntryDto = _mapper.Map<OperationProductEntryDto>(operationProductEntry); // Mapear entitidad a dto
                 return Ok(operationProductEntryDto);
             }
@@ -81,7 +81,7 @@ namespace WebApi.Controllers
         [HttpDelete("eliminar/{id:int}")] // Metodo DELETE para eliminar elemento
         public IActionResult Delete(int id)
         {
-            var operationProductEntry = _operationProductEntryRepository.Delete(id); // Eliminar elemento
+            var operationProductEntry = _operationProductEntryRepository.Delete(id, HttpContext.User.Identity.Name); // Eliminar elemento
             var operationProductEntryDto = _mapper.Map<OperationProductEntryDto>(operationProductEntry); // Mapear entitidad a dto
             return Ok(operationProductEntryDto);
         }

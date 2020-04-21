@@ -101,5 +101,20 @@ namespace WebApi.Services
             _context.SaveChanges();
             return person;
         }
+
+        public Person Insert(Person body, string id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Person Update(PersonDto body, string id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Person Delete(int id, string ids)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

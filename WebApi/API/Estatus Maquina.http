@@ -1,6 +1,6 @@
 POST http://localhost:4000/api/estatusMaquina/agregar HTTP/1.1
 content-type: application/json
-# Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6IjEiLCJuYmYiOjE1ODY5NTgxNDEsImV4cCI6MTU4Njk2NTM0MSwiaWF0IjoxNTg2OTU4MTQxfQ.roqqHZ79MvD781S6SekebSfXj0fsrttPBafy6_Vmbn8
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6IjEiLCJuYmYiOjE1ODc0MjY5MTUsImV4cCI6MTU4NzQ1NTcxNSwiaWF0IjoxNTg3NDI2OTE1fQ.QmFHsHozCz30yCqCDW5nZJouq9cb61tSQXyk2mwT3VI
 
 {
   "description": "Active"
@@ -19,10 +19,10 @@ content-type: application/json
 ###
 PUT http://localhost:4000/api/estatusMaquina/actualizar HTTP/1.1
 content-type: application/json
-# Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6IjEiLCJuYmYiOjE1ODY5NTgxNDEsImV4cCI6MTU4Njk2NTM0MSwiaWF0IjoxNTg2OTU4MTQxfQ.roqqHZ79MvD781S6SekebSfXj0fsrttPBafy6_Vmbn8
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6IjEiLCJuYmYiOjE1ODc0MjY5MTUsImV4cCI6MTU4NzQ1NTcxNSwiaWF0IjoxNTg3NDI2OTE1fQ.QmFHsHozCz30yCqCDW5nZJouq9cb61tSQXyk2mwT3VI
 
 {
-  "idStatusMachine": 2,
+  "idStatusMachine": 1,
   "description": "Inactivo"
 }
 ###

@@ -1,6 +1,6 @@
 POST http://localhost:4000/api/proveedor/agregar HTTP/1.1
 content-type: application/json
-# Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6IjEiLCJuYmYiOjE1ODY5NTgxNDEsImV4cCI6MTU4Njk2NTM0MSwiaWF0IjoxNTg2OTU4MTQxfQ.roqqHZ79MvD781S6SekebSfXj0fsrttPBafy6_Vmbn8
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6IjIiLCJuYmYiOjE1ODc0MjUxMDYsImV4cCI6MTU4NzQ1MzkwNiwiaWF0IjoxNTg3NDI1MTA2fQ.i_b5ilhedZSFjtze6hHfVN00b09y3qEqJavF-2o8Ek8
 
 {
   "nameProvider": "Proveedor1",
@@ -14,17 +14,17 @@ content-type: application/json
 ###
 GET http://localhost:4000/api/proveedor/listar HTTP/1.1
 content-type: application/json
-# Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6IjEiLCJuYmYiOjE1ODY5NTgxNDEsImV4cCI6MTU4Njk2NTM0MSwiaWF0IjoxNTg2OTU4MTQxfQ.roqqHZ79MvD781S6SekebSfXj0fsrttPBafy6_Vmbn8
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6IjEiLCJuYmYiOjE1ODc0MjcyNjYsImV4cCI6MTU4NzQ1NjA2NiwiaWF0IjoxNTg3NDI3MjY2fQ.urTEvNnTzS5boljIxvj8uUT484f6ZqHTEcZtq7Vc5aY
 
 ###
 GET http://localhost:4000/api/proveedor/obtener/2 HTTP/1.1
 content-type: application/json
-# Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6IjEiLCJuYmYiOjE1ODY5NTgxNDEsImV4cCI6MTU4Njk2NTM0MSwiaWF0IjoxNTg2OTU4MTQxfQ.roqqHZ79MvD781S6SekebSfXj0fsrttPBafy6_Vmbn8
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6IjEiLCJuYmYiOjE1ODc0MTY1NzMsImV4cCI6MTU4NzQyMzc3MywiaWF0IjoxNTg3NDE2NTczfQ.QcK5a1hOHnsslX908ABQ00A37QNhJFKtxKLdhuUh3dA
 
 ###
 PUT http://localhost:4000/api/proveedor/actualizar HTTP/1.1
 content-type: application/json
-# Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6IjEiLCJuYmYiOjE1ODY5NTgxNDEsImV4cCI6MTU4Njk2NTM0MSwiaWF0IjoxNTg2OTU4MTQxfQ.roqqHZ79MvD781S6SekebSfXj0fsrttPBafy6_Vmbn8
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6IjEiLCJuYmYiOjE1ODc0MjU0MDgsImV4cCI6MTU4NzQ1NDIwOCwiaWF0IjoxNTg3NDI1NDA4fQ.kThekc9PJhkt76UDoGCiEtvWD2RN11FAf0CQrZhzK6s
 
 {
   "idProvider": 1,
@@ -33,5 +33,5 @@ content-type: application/json
   "nit": "551628",
   "address": "direccion1",
   "email": "email1@gmail.com",
-  "typeProvider": 1,
+  "typeProvider": 2,
 }

@@ -6,10 +6,11 @@ using Microsoft.Extensions.Options;
 using WebApi.Entities;
 using WebApi.Repository;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 
 namespace WebApi.Controllers
 {
-    //[Authorize]
+    [Authorize]
     [ApiController]
     [Route("api/proveedor/")]
     public class ProviderController : ControllerBase
@@ -33,7 +34,7 @@ namespace WebApi.Controllers
 
             try
             {
-                provider = _providerRepository.Insert(provider); // Guardamos el elemento
+                provider = _providerRepository.Insert(provider, HttpContext.User.Identity.Name); // Guardamos el elemento
                 providerDto = _mapper.Map<ProviderDto>(provider);  // Mapear entitidad a dto
                 return Ok(providerDto);
             }
@@ -46,6 +47,7 @@ namespace WebApi.Controllers
         [HttpGet("listar")] // metodo GET para listar elementos
         public IActionResult GetAll()
         {
+            string username = HttpContext.User.Identity.Name;
             var providers =  _providerRepository.GetAll(); // Listamos elementos
             var providerDtos = _mapper.Map<IList<ProviderDto>>(providers); // Mapear entitidad a dto
             return Ok(providerDtos);
@@ -66,7 +68,7 @@ namespace WebApi.Controllers
 
             try
             {
-                provider =  _providerRepository.Update(providerDto); // Actualizamos el elemento
+                provider =  _providerRepository.Update(providerDto, HttpContext.User.Identity.Name); // Actualizamos el elemento
                 providerDto = _mapper.Map<ProviderDto>(provider); // Mapear entitidad a dto
                 return Ok(providerDto);
             }
@@ -79,7 +81,7 @@ namespace WebApi.Controllers
         [HttpDelete("eliminar/{id:int}")] // Metodo DELETE para eliminar elemento
         public IActionResult Delete(int id)
         {
-            var provider = _providerRepository.Delete(id); // Eliminar elemento
+            var provider = _providerRepository.Delete(id, HttpContext.User.Identity.Name); // Eliminar elemento
             var providerDto = _mapper.Map<ProviderDto>(provider); // Mapear entitidad a dto
             return Ok(providerDto);
         }

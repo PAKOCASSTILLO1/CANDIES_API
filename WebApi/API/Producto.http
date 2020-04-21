@@ -1,6 +1,6 @@
 POST http://localhost:4000/api/producto/agregar HTTP/1.1
 content-type: application/json
-# Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6IjEiLCJuYmYiOjE1ODY5NTgxNDEsImV4cCI6MTU4Njk2NTM0MSwiaWF0IjoxNTg2OTU4MTQxfQ.roqqHZ79MvD781S6SekebSfXj0fsrttPBafy6_Vmbn8
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6IjEiLCJuYmYiOjE1ODc0Mjc3MDUsImV4cCI6MTU4NzQ1NjUwNSwiaWF0IjoxNTg3NDI3NzA1fQ.qvG_gigj3XbttDvAN9gm8EDf7j_-lgIKTF9At5j1Er8
 
 {
   "name": "Producto1",
@@ -14,7 +14,7 @@ content-type: application/json
 ###
 GET http://localhost:4000/api/producto/listar HTTP/1.1
 content-type: application/json
-# Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6IjEiLCJuYmYiOjE1ODY5NTgxNDEsImV4cCI6MTU4Njk2NTM0MSwiaWF0IjoxNTg2OTU4MTQxfQ.roqqHZ79MvD781S6SekebSfXj0fsrttPBafy6_Vmbn8
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6IjEiLCJuYmYiOjE1ODc0Mjc3MDUsImV4cCI6MTU4NzQ1NjUwNSwiaWF0IjoxNTg3NDI3NzA1fQ.qvG_gigj3XbttDvAN9gm8EDf7j_-lgIKTF9At5j1Er8
 
 ###
 GET http://localhost:4000/api/producto/obtener/2 HTTP/1.1

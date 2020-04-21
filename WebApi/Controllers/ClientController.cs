@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace WebApi.Controllers
 {
-    //[Authorize]
+    [Authorize]
     [ApiController]
     [Route("api/cliente/")]
     public class ClientController : ControllerBase
@@ -33,7 +33,7 @@ namespace WebApi.Controllers
 
             try
             {
-                client = _clientRepository.Insert(client); // Guardamos el elemento
+                client = _clientRepository.Insert(client, HttpContext.User.Identity.Name); // Guardamos el elemento
                 clientDto = _mapper.Map<ClientDto>(client);  // Mapear entitidad a dto
                 return Ok(clientDto);
             }
@@ -66,7 +66,7 @@ namespace WebApi.Controllers
 
             try
             {
-                client =  _clientRepository.Update(clientDto); // Actualizamos el elemento
+                client =  _clientRepository.Update(clientDto, HttpContext.User.Identity.Name); // Actualizamos el elemento
                 clientDto = _mapper.Map<ClientDto>(client); // Mapear entitidad a dto
                 return Ok(clientDto);
             }
@@ -79,7 +79,7 @@ namespace WebApi.Controllers
         [HttpDelete("eliminar/{id:int}")] // Metodo DELETE para eliminar elemento
         public IActionResult Delete(int id)
         {
-            var client = _clientRepository.Delete(id); // Eliminar elemento
+            var client = _clientRepository.Delete(id, HttpContext.User.Identity.Name); // Eliminar elemento
             var clientDto = _mapper.Map<ClientDto>(client); // Mapear entitidad a dto
             return Ok(clientDto);
         }

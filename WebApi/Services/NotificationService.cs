@@ -64,5 +64,20 @@ namespace WebApi.Services
         {
             throw new NotImplementedException();
         }
+
+        public Notification Insert(Notification body, string id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Notification Update(NotificationDto body, string id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Notification Delete(int id, string ids)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

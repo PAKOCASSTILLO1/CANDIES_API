@@ -5,6 +5,11 @@ using WebApi.Entities;
 using WebApi.Helpers;
 using WebApi.Dtos;
 using WebApi.Repository;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using System.Security.Claims;
+using System.IdentityModel.Tokens.Jwt;
+using System.Threading.Tasks;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace WebApi.Services
 {
@@ -154,6 +159,38 @@ namespace WebApi.Services
         }
 
         public User Insert(User user)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void token(){
+            var options = new JwtBearerOptions
+            {
+                Events = new JwtBearerEvents
+                {
+                    OnTokenValidated = context =>
+                    {
+                        var userService = context.HttpContext.RequestServices.GetRequiredService<IUserRepository>();
+                        int userId = int.Parse(context.Principal.Identity.Name);
+                        User user = userService.GetById(userId);
+                        Console.WriteLine("Username: "+user.userName);
+                        return Task.CompletedTask;
+                    }
+                }
+            };
+        }
+
+        public User Insert(User body, string id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public User Update(UserDto body, string id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public User Delete(int id, string ids)
         {
             throw new NotImplementedException();
         }

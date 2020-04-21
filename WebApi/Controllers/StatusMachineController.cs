@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace WebApi.Controllers
 {
-    //[Authorize]
+    [Authorize]
     [ApiController]
     [Route("api/estatusMaquina/")]
     public class StatusMachineController : ControllerBase
@@ -33,7 +33,7 @@ namespace WebApi.Controllers
 
             try
             {
-                statusMachine = _statusMachineRepository.Insert(statusMachine); // Guardamos el elemento
+                statusMachine = _statusMachineRepository.Insert(statusMachine, HttpContext.User.Identity.Name); // Guardamos el elemento
                 statusMachineDto = _mapper.Map<StatusMachineDto>(statusMachine);  // Mapear entitidad a dto
                 return Ok(statusMachineDto);
             }
@@ -66,7 +66,7 @@ namespace WebApi.Controllers
 
             try
             {
-                statusMachine =  _statusMachineRepository.Update(statusMachineDto); // Actualizamos el elemento
+                statusMachine =  _statusMachineRepository.Update(statusMachineDto, HttpContext.User.Identity.Name); // Actualizamos el elemento
                 statusMachineDto = _mapper.Map<StatusMachineDto>(statusMachine); // Mapear entitidad a dto
                 return Ok(statusMachineDto);
             }
@@ -79,7 +79,7 @@ namespace WebApi.Controllers
         [HttpDelete("eliminar/{id:int}")] // Metodo DELETE para eliminar elemento
         public IActionResult Delete(int id)
         {
-            var statusMachine = _statusMachineRepository.Delete(id); // Eliminar elemento
+            var statusMachine = _statusMachineRepository.Delete(id, HttpContext.User.Identity.Name); // Eliminar elemento
             var statusMachineDto = _mapper.Map<StatusMachineDto>(statusMachine); // Mapear entitidad a dto
             return Ok(statusMachineDto);
         }

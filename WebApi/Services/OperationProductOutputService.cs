@@ -32,16 +32,17 @@ namespace WebApi.Services
         }
 
         // Insertar elementos en la base de datos
-        public OperationProductOutput Insert(OperationProductOutput opOutput)
+        public OperationProductOutput Insert(OperationProductOutput opOutput, string id)
         {
             // Guardar elemento
+            opOutput.auditInsert(id);
             _context.OperationProductOutput.Add(opOutput);
             _context.SaveChanges();
             return opOutput;
         }
 
         // Actualizar elemento
-        public OperationProductOutput Update(OperationProductOutputDto opOutputParam)
+        public OperationProductOutput Update(OperationProductOutputDto opOutputParam, string id)
         {
             // Buscamos elemento a modificar
             var opOutput = _context.OperationProductOutput.Find(opOutputParam.idOperationOutput);
@@ -52,6 +53,7 @@ namespace WebApi.Services
 
             // actualizamos dato
             opOutput.update(opOutputParam, _context);
+            opOutput.auditUpdate(id);
 
             // Guardar cambios
             _context.OperationProductOutput.Update(opOutput);
@@ -61,6 +63,21 @@ namespace WebApi.Services
 
         // Eliminar elemento (Cambiar a inactivo)
         public OperationProductOutput Delete(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public OperationProductOutput Insert(OperationProductOutput body)
+        {
+            throw new NotImplementedException();
+        }
+
+        public OperationProductOutput Update(OperationProductOutputDto body)
+        {
+            throw new NotImplementedException();
+        }
+
+        public OperationProductOutput Delete(int id, string ids)
         {
             throw new NotImplementedException();
         }

@@ -42,8 +42,9 @@ namespace WebApi.Services
         }
 
         // Insertar elementos en la base de datos
-        public ClientMachine Insert(ClientMachine clientMachine)
+        public ClientMachine Insert(ClientMachine clientMachine, string id)
         {
+            clientMachine.auditInsert(id);
             // Guardar elemento
             _context.ClientMachine.Add(clientMachine);
             _context.SaveChanges();
@@ -51,7 +52,7 @@ namespace WebApi.Services
         }
 
         // Actualizar elemento
-        public ClientMachine Update(ClientMachineDto clientMachineParam)
+        public ClientMachine Update(ClientMachineDto clientMachineParam, string id)
         {
             // Buscamos elemento a modificar
             var clientMachine = _context.ClientMachine.Find(clientMachineParam.idClientMachine);
@@ -62,7 +63,7 @@ namespace WebApi.Services
 
             // actualizamos dato
             clientMachine.update(clientMachineParam, _context);
-
+            clientMachine.auditUpdate(id);
             // Guardar cambios
             _context.ClientMachine.Update(clientMachine);
             _context.SaveChanges();
@@ -70,7 +71,7 @@ namespace WebApi.Services
         }
 
         // Eliminar elemento (Cambiar a inactivo)
-        public ClientMachine Delete(int id)
+        public ClientMachine Delete(int id, string ids)
         {
             // Buscamos elemento a eliminar
             var clientMachine = _context.ClientMachine.Find(id);
@@ -83,11 +84,27 @@ namespace WebApi.Services
 
             // cambiamos estado
             clientMachine.state = false;
+            clientMachine.auditUpdate(ids);
 
             // Guardamos cambios
             _context.ClientMachine.Update(clientMachine);
             _context.SaveChanges();
             return clientMachine;
+        }
+
+        public ClientMachine Insert(ClientMachine body)
+        {
+            throw new NotImplementedException();
+        }
+
+        public ClientMachine Update(ClientMachineDto body)
+        {
+            throw new NotImplementedException();
+        }
+
+        public ClientMachine Delete(int id)
+        {
+            throw new NotImplementedException();
         }
     }
 }

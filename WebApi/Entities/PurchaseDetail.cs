@@ -1,3 +1,4 @@
+using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Newtonsoft.Json;
@@ -19,6 +20,18 @@ namespace WebApi.Entities
             this.purchaseOrderFK = _context.PurchaseOrder.Find(dto.idPurchaseOrder);
         }
 
+        public void auditInsert(String id){
+            int user = Int32.Parse(id);
+            this.Usuario_Creo = user;
+            this.Fecha_Creo = DateTime.Now;
+        }
+
+        public void auditUpdate(String id){
+            int user = Int32.Parse(id);
+            this.Usuario_Modifico = user;
+            this.Fecha_Modifico = DateTime.Now;
+        }
+
         [Key]
         public int idPurchaseDetail {get;set;}
 
@@ -33,5 +46,11 @@ namespace WebApi.Entities
 
         [JsonIgnore]
         public PurchaseOrder purchaseOrderFK {get;set;}
+
+        // Autoria
+        public int Usuario_Creo {get; set;}
+        public DateTime Fecha_Creo {get;set;}
+        public int? Usuario_Modifico {get;set;}
+        public DateTime? Fecha_Modifico {get;set;}
     }
 }

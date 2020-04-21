@@ -89,5 +89,20 @@ namespace WebApi.Services
             _context.SaveChanges();
             return rolePage;
         }
+
+        public RolePage Insert(RolePage body, string id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public RolePage Update(RolePageDto body, string id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public RolePage Delete(int id, string ids)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

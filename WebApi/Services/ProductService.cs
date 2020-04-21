@@ -99,5 +99,20 @@ namespace WebApi.Services
             _context.SaveChanges();
             return product;
         }
+
+        public Product Insert(Product body, string id)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public Product Update(ProductDto body, string id)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public Product Delete(int id, string ids)
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }

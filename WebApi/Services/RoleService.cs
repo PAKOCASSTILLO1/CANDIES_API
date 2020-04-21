@@ -101,5 +101,20 @@ namespace WebApi.Services
             _context.SaveChanges();
             return role;
         }
+
+        public Role Insert(Role body, string id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Role Update(RoleDto body, string id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Role Delete(int id, string ids)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

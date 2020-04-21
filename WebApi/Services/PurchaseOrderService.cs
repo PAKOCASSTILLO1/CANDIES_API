@@ -76,5 +76,20 @@ namespace WebApi.Services
         {
             throw new NotImplementedException();
         }
+
+        public PurchaseOrder Insert(PurchaseOrder body, string id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public PurchaseOrder Update(PurchaseOrderDto body, string id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public PurchaseOrder Delete(int id, string ids)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

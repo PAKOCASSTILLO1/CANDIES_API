@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace WebApi.Controllers
 {
-    //[Authorize]
+    [Authorize]
     [ApiController]
     [Route("api/detalleCompra/")]
     public class PurchaseDetailController : ControllerBase
@@ -33,7 +33,7 @@ namespace WebApi.Controllers
 
             try
             {
-                purchaseDetail = _purchaseDetailRepository.Insert(purchaseDetail); // Guardamos el elemento
+                purchaseDetail = _purchaseDetailRepository.Insert(purchaseDetail, HttpContext.User.Identity.Name); // Guardamos el elemento
                 purchaseDetailDto = _mapper.Map<PurchaseDetailDto>(purchaseDetail);  // Mapear entitidad a dto
                 return Ok(purchaseDetailDto);
             }
@@ -66,7 +66,7 @@ namespace WebApi.Controllers
 
             try
             {
-                purchaseDetail =  _purchaseDetailRepository.Update(purchaseDetailDto); // Actualizamos el elemento
+                purchaseDetail =  _purchaseDetailRepository.Update(purchaseDetailDto, HttpContext.User.Identity.Name); // Actualizamos el elemento
                 purchaseDetailDto = _mapper.Map<PurchaseDetailDto>(purchaseDetail); // Mapear entitidad a dto
                 return Ok(purchaseDetailDto);
             }
@@ -79,7 +79,7 @@ namespace WebApi.Controllers
         [HttpDelete("eliminar/{id:int}")] // Metodo DELETE para eliminar elemento
         public IActionResult Delete(int id)
         {
-            var purchaseDetail = _purchaseDetailRepository.Delete(id); // Eliminar elemento
+            var purchaseDetail = _purchaseDetailRepository.Delete(id, HttpContext.User.Identity.Name); // Eliminar elemento
             var purchaseDetailDto = _mapper.Map<PurchaseDetailDto>(purchaseDetail); // Mapear entitidad a dto
             return Ok(purchaseDetailDto);
         }

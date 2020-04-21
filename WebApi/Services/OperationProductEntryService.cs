@@ -32,17 +32,18 @@ namespace WebApi.Services
         }
 
         // Insertar elementos en la base de datos
-        public OperationProductEntry Insert(OperationProductEntry operationProductEntry)
+        public OperationProductEntry Insert(OperationProductEntry operationProductEntry, string id)
         {
             // Guardar elemento
             operationProductEntry.dateOperationEntry = DateTime.Now;
+            operationProductEntry.auditInsert(id);
             _context.OperationProductEntry.Add(operationProductEntry);
             _context.SaveChanges();
             return operationProductEntry;
         }
 
         // Actualizar elemento
-        public OperationProductEntry Update(OperationProductEntryDto operationProductEntryParam)
+        public OperationProductEntry Update(OperationProductEntryDto operationProductEntryParam, string id)
         {
             // Buscamos elemento a modificar
             var operationProductEntry = _context.OperationProductEntry.Find(operationProductEntryParam.idOperationEntry);
@@ -55,6 +56,7 @@ namespace WebApi.Services
             operationProductEntry.update(operationProductEntryParam, _context);
 
             // Guardar cambios
+            operationProductEntry.auditUpdate(id);
             _context.OperationProductEntry.Update(operationProductEntry);
             _context.SaveChanges();
             return operationProductEntry;
@@ -62,6 +64,21 @@ namespace WebApi.Services
 
         // Eliminar elemento (Cambiar a inactivo)
         public OperationProductEntry Delete(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public OperationProductEntry Insert(OperationProductEntry body)
+        {
+            throw new NotImplementedException();
+        }
+
+        public OperationProductEntry Update(OperationProductEntryDto body)
+        {
+            throw new NotImplementedException();
+        }
+
+        public OperationProductEntry Delete(int id, string ids)
         {
             throw new NotImplementedException();
         }

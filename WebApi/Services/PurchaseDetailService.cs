@@ -32,16 +32,17 @@ namespace WebApi.Services
         }
 
         // Insertar elementos en la base de datos
-        public PurchaseDetail Insert(PurchaseDetail purchaseDetail)
+        public PurchaseDetail Insert(PurchaseDetail purchaseDetail, string id)
         {
             // Guardar elemento
+            purchaseDetail.auditInsert(id);
             _context.PurchaseDetail.Add(purchaseDetail);
             _context.SaveChanges();
             return purchaseDetail;
         }
 
         // Actualizar elemento
-        public PurchaseDetail Update(PurchaseDetailDto purchaseDetailParam)
+        public PurchaseDetail Update(PurchaseDetailDto purchaseDetailParam, string id)
         {
             // Buscamos elemento a modificar
             var purchaseDetail = _context.PurchaseDetail.Find(purchaseDetailParam.idPurchaseDetail);
@@ -52,6 +53,7 @@ namespace WebApi.Services
 
             // actualizamos dato
             purchaseDetail.update(purchaseDetailParam, _context);
+            purchaseDetail.auditUpdate(id);
 
             // Guardar cambios
             _context.PurchaseDetail.Update(purchaseDetail);
@@ -61,6 +63,21 @@ namespace WebApi.Services
 
         // Eliminar elemento (Cambiar a inactivo)
         public PurchaseDetail Delete(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public PurchaseDetail Insert(PurchaseDetail body)
+        {
+            throw new NotImplementedException();
+        }
+
+        public PurchaseDetail Update(PurchaseDetailDto body)
+        {
+            throw new NotImplementedException();
+        }
+
+        public PurchaseDetail Delete(int id, string ids)
         {
             throw new NotImplementedException();
         }

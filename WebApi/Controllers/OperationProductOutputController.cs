@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace WebApi.Controllers
 {
-    //[Authorize]
+    [Authorize]
     [ApiController]
     [Route("api/operacionProductoSalida/")]
     public class OperationProductOutputController : ControllerBase
@@ -33,7 +33,7 @@ namespace WebApi.Controllers
 
             try
             {
-                opOutput = _opOutputRepository.Insert(opOutput); // Guardamos el elemento
+                opOutput = _opOutputRepository.Insert(opOutput, HttpContext.User.Identity.Name); // Guardamos el elemento
                 opOutputDto = _mapper.Map<OperationProductOutputDto>(opOutput);  // Mapear entitidad a dto
                 return Ok(opOutputDto);
             }
@@ -66,7 +66,7 @@ namespace WebApi.Controllers
 
             try
             {
-                opOutput =  _opOutputRepository.Update(opOutputDto); // Actualizamos el elemento
+                opOutput =  _opOutputRepository.Update(opOutputDto, HttpContext.User.Identity.Name); // Actualizamos el elemento
                 opOutputDto = _mapper.Map<OperationProductOutputDto>(opOutput); // Mapear entitidad a dto
                 return Ok(opOutputDto);
             }
@@ -79,7 +79,7 @@ namespace WebApi.Controllers
         [HttpDelete("eliminar/{id:int}")] // Metodo DELETE para eliminar elemento
         public IActionResult Delete(int id)
         {
-            var opOutput = _opOutputRepository.Delete(id); // Eliminar elemento
+            var opOutput = _opOutputRepository.Delete(id, HttpContext.User.Identity.Name); // Eliminar elemento
             var opOutputDto = _mapper.Map<OperationProductOutputDto>(opOutput); // Mapear entitidad a dto
             return Ok(opOutputDto);
         }

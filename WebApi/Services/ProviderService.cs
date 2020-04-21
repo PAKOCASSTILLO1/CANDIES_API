@@ -5,6 +5,10 @@ using WebApi.Entities;
 using WebApi.Helpers;
 using WebApi.Dtos;
 using WebApi.Repository;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.Extensions.DependencyInjection;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 
 namespace WebApi.Services
 {
@@ -42,20 +46,21 @@ namespace WebApi.Services
         }
 
         // Insertar elementos en la base de datos
-        public Provider Insert(Provider provider)
+        public Provider Insert(Provider provider, string id)
         {
             // Validar si ya existe
             if (_context.Provider.Any(x => x.nameProvider == provider.nameProvider))
                 throw new AppException("El proveedor \"" + provider.nameProvider + "\" ya existe.");
 
             // Guardar elemento
+            provider.auditInsert(id);
             _context.Provider.Add(provider);
             _context.SaveChanges();
             return provider;
         }
 
         // Actualizar elemento
-        public Provider Update(ProviderDto providerParam)
+        public Provider Update(ProviderDto providerParam, string id)
         {
             // Buscamos elemento a modificar
             var provider = _context.Provider.Find(providerParam.idProvider);
@@ -71,10 +76,9 @@ namespace WebApi.Services
                 if (_context.Provider.Any(x => x.nameProvider == providerParam.nameProvider))
                     throw new AppException("El proveedor " + providerParam.nameProvider + " ya existe");
             }
-
             // actualizamos dato
             provider.update(providerParam, _context);
-
+            provider.auditUpdate(id);
             // Guardar cambios
             _context.Provider.Update(provider);
             _context.SaveChanges();
@@ -82,7 +86,7 @@ namespace WebApi.Services
         }
 
         // Eliminar elemento (Cambiar a inactivo)
-        public Provider Delete(int id)
+        public Provider Delete(int id, string ids)
         {
             // Buscamos elemento a eliminar
             var provider = _context.Provider.Find(id);
@@ -95,11 +99,26 @@ namespace WebApi.Services
 
             // cambiamos estado
             provider.state = false;
-
+            provider.auditUpdate(ids);
             // Guardamos cambios
             _context.Provider.Update(provider);
             _context.SaveChanges();
             return provider;
+        }
+
+        public Provider Insert(Provider body)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Provider Update(ProviderDto body)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Provider Delete(int id)
+        {
+            throw new NotImplementedException();
         }
     }
 }

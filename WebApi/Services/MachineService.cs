@@ -64,5 +64,20 @@ namespace WebApi.Services
         {
             throw new NotImplementedException();
         }
+
+        public Machine Insert(Machine body, string id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Machine Update(MachineDto body, string id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Machine Delete(int id, string ids)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

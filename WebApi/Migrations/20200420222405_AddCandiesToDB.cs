@@ -64,7 +64,11 @@ namespace WebApi.Migrations
                     address = table.Column<string>(maxLength: 200, nullable: true),
                     email = table.Column<string>(maxLength: 100, nullable: true),
                     typeProvider = table.Column<int>(nullable: false),
-                    state = table.Column<bool>(nullable: false)
+                    state = table.Column<bool>(nullable: false),
+                    Usuario_Creo = table.Column<int>(nullable: false),
+                    Fecha_Creo = table.Column<DateTime>(nullable: false),
+                    Usuario_Modifico = table.Column<int>(nullable: true),
+                    Fecha_Modifico = table.Column<DateTime>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -91,7 +95,11 @@ namespace WebApi.Migrations
                 {
                     idStatusMachine = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    description = table.Column<string>(maxLength: 50, nullable: true)
+                    description = table.Column<string>(maxLength: 50, nullable: true),
+                    Usuario_Creo = table.Column<int>(nullable: false),
+                    Fecha_Creo = table.Column<DateTime>(nullable: false),
+                    Usuario_Modifico = table.Column<int>(nullable: true),
+                    Fecha_Modifico = table.Column<DateTime>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -130,7 +138,11 @@ namespace WebApi.Migrations
                     email = table.Column<string>(maxLength: 100, nullable: true),
                     idPerson = table.Column<int>(nullable: false),
                     urlPage = table.Column<string>(maxLength: 500, nullable: true),
-                    state = table.Column<bool>(nullable: false)
+                    state = table.Column<bool>(nullable: false),
+                    Usuario_Creo = table.Column<int>(nullable: false),
+                    Fecha_Creo = table.Column<DateTime>(nullable: false),
+                    Usuario_Modifico = table.Column<int>(nullable: true),
+                    Fecha_Modifico = table.Column<DateTime>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -317,7 +329,11 @@ namespace WebApi.Migrations
                     idProduct = table.Column<int>(nullable: false),
                     quantity = table.Column<int>(nullable: false),
                     unitValue = table.Column<float>(nullable: false),
-                    idProvider = table.Column<int>(nullable: true)
+                    idProvider = table.Column<int>(nullable: true),
+                    Usuario_Creo = table.Column<int>(nullable: false),
+                    Fecha_Creo = table.Column<DateTime>(nullable: false),
+                    Usuario_Modifico = table.Column<int>(nullable: true),
+                    Fecha_Modifico = table.Column<DateTime>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -343,7 +359,11 @@ namespace WebApi.Migrations
                     idPurchaseDetail = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     idProduct = table.Column<int>(nullable: false),
-                    idPurchaseOrder = table.Column<int>(nullable: true)
+                    idPurchaseOrder = table.Column<int>(nullable: true),
+                    Usuario_Creo = table.Column<int>(nullable: false),
+                    Fecha_Creo = table.Column<DateTime>(nullable: false),
+                    Usuario_Modifico = table.Column<int>(nullable: true),
+                    Fecha_Modifico = table.Column<DateTime>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -371,7 +391,11 @@ namespace WebApi.Migrations
                     idClient = table.Column<int>(nullable: false),
                     idMachine = table.Column<int>(nullable: false),
                     dateAssignment = table.Column<DateTime>(nullable: false),
-                    state = table.Column<bool>(nullable: false)
+                    state = table.Column<bool>(nullable: false),
+                    Usuario_Creo = table.Column<int>(nullable: false),
+                    Fecha_Creo = table.Column<DateTime>(nullable: false),
+                    Usuario_Modifico = table.Column<int>(nullable: true),
+                    Fecha_Modifico = table.Column<DateTime>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -401,7 +425,11 @@ namespace WebApi.Migrations
                     quantity = table.Column<int>(nullable: false),
                     unitValue = table.Column<float>(nullable: false),
                     idClient = table.Column<int>(nullable: false),
-                    idNotification = table.Column<int>(nullable: true)
+                    idNotification = table.Column<int>(nullable: true),
+                    Usuario_Creo = table.Column<int>(nullable: false),
+                    Fecha_Creo = table.Column<DateTime>(nullable: false),
+                    Usuario_Modifico = table.Column<int>(nullable: true),
+                    Fecha_Modifico = table.Column<DateTime>(nullable: true)
                 },
                 constraints: table =>
                 {

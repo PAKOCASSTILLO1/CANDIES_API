@@ -32,20 +32,21 @@ namespace WebApi.Services
         }
 
         // Insertar elementos en la base de datos
-        public StatusMachine Insert(StatusMachine statusMachine)
+        public StatusMachine Insert(StatusMachine statusMachine, string id)
         {
             // Validar si ya existe
             if (_context.StatusMachine.Any(x => x.description == statusMachine.description))
                 throw new AppException("El rol \"" + statusMachine.description + "\" ya existe.");
 
             // Guardar elemento
+            statusMachine.auditInsert(id);
             _context.StatusMachine.Add(statusMachine);
             _context.SaveChanges();
             return statusMachine;
         }
 
         // Actualizar elemento
-        public StatusMachine Update(StatusMachineDto statusMachineParam)
+        public StatusMachine Update(StatusMachineDto statusMachineParam, string id)
         {
             // Buscamos elemento a modificar
             var statusMachine = _context.StatusMachine.Find(statusMachineParam.idStatusMachine);
@@ -64,6 +65,7 @@ namespace WebApi.Services
 
             // actualizamos dato
             statusMachine.update(statusMachineParam);
+            statusMachine.auditUpdate(id);
 
             // Guardar cambios
             _context.StatusMachine.Update(statusMachine);
@@ -73,6 +75,21 @@ namespace WebApi.Services
 
         // Eliminar elemento (Cambiar a inactivo)
         public StatusMachine Delete(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public StatusMachine Insert(StatusMachine body)
+        {
+            throw new NotImplementedException();
+        }
+
+        public StatusMachine Update(StatusMachineDto body)
+        {
+            throw new NotImplementedException();
+        }
+
+        public StatusMachine Delete(int id, string ids)
         {
             throw new NotImplementedException();
         }

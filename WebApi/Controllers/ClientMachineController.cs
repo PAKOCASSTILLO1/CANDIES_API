@@ -11,7 +11,7 @@ using System.Globalization;
 
 namespace WebApi.Controllers
 {
-    //[Authorize]
+    [Authorize]
     [ApiController]
     [Route("api/clienteMaquina/")]
     public class ClientMachineController : ControllerBase
@@ -36,7 +36,7 @@ namespace WebApi.Controllers
 
             try
             {
-                clientMachine = _clientMachineRepository.Insert(clientMachine); // Guardamos el elemento
+                clientMachine = _clientMachineRepository.Insert(clientMachine, HttpContext.User.Identity.Name); // Guardamos el elemento
                 clientMachineDto = _mapper.Map<ClientMachineDto>(clientMachine);  // Mapear entitidad a dto
                 return Ok(clientMachineDto);
             }
@@ -69,7 +69,7 @@ namespace WebApi.Controllers
 
             try
             {
-                clientMachine =  _clientMachineRepository.Update(clientMachineDto); // Actualizamos el elemento
+                clientMachine =  _clientMachineRepository.Update(clientMachineDto, HttpContext.User.Identity.Name); // Actualizamos el elemento
                 clientMachineDto = _mapper.Map<ClientMachineDto>(clientMachine); // Mapear entitidad a dto
                 return Ok(clientMachineDto);
             }
@@ -82,7 +82,7 @@ namespace WebApi.Controllers
         [HttpDelete("eliminar/{id:int}")] // Metodo DELETE para eliminar elemento
         public IActionResult Delete(int id)
         {
-            var clientMachine = _clientMachineRepository.Delete(id); // Eliminar elemento
+            var clientMachine = _clientMachineRepository.Delete(id, HttpContext.User.Identity.Name); // Eliminar elemento
             var clientMachineDto = _mapper.Map<ClientMachineDto>(clientMachine); // Mapear entitidad a dto
             return Ok(clientMachineDto);
         }

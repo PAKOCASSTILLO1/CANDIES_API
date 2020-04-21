@@ -101,5 +101,20 @@ namespace WebApi.Services
             _context.SaveChanges();
             return page;
         }
+
+        public Page Insert(Page body, string id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Page Update(PageDto body, string id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Page Delete(int id, string ids)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

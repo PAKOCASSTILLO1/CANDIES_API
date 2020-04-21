@@ -15,7 +15,7 @@ using WebApi.Repository;
 
 namespace WebApi.Controllers
 {
-    //[Authorize]
+    [Authorize]
     [ApiController]
     [Route("api/usuario/")]
     public class UserController : ControllerBase
@@ -50,7 +50,7 @@ namespace WebApi.Controllers
                 {
                     new Claim(ClaimTypes.Name, user.idUser.ToString())
                 }),
-                Expires = DateTime.UtcNow.AddHours(2),
+                Expires = DateTime.UtcNow.AddHours(8),
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
             };
             var token = tokenHandler.CreateToken(tokenDescriptor);

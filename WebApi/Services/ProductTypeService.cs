@@ -74,5 +74,20 @@ namespace WebApi.Services
         {
             throw new System.NotImplementedException();
         }
+
+        public ProductType Insert(ProductType body, string id)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public ProductType Update(ProductTypeDto body, string id)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public ProductType Delete(int id, string ids)
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }
