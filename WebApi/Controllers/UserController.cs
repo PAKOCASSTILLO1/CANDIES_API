@@ -32,7 +32,7 @@ namespace WebApi.Controllers
         }
 
         [AllowAnonymous]
-        [HttpPost("atenticacion")]
+        [HttpPost("autenticacion")]
         public IActionResult Authenticate([FromBody]UserRegisterDto userRegisterDto)
         {
             var user = _userRepository.Authenticate(userRegisterDto.userName, userRegisterDto.password);

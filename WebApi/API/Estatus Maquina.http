@@ -1,6 +1,6 @@
 POST http://localhost:4000/api/estatusMaquina/agregar HTTP/1.1
 content-type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6IjEiLCJuYmYiOjE1ODc0MjY5MTUsImV4cCI6MTU4NzQ1NTcxNSwiaWF0IjoxNTg3NDI2OTE1fQ.QmFHsHozCz30yCqCDW5nZJouq9cb61tSQXyk2mwT3VI
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6IjEiLCJuYmYiOjE1ODc0MzI1NjIsImV4cCI6MTU4NzQ2MTM2MiwiaWF0IjoxNTg3NDMyNTYyfQ.ZNWcN8aTJJ_4XUwhOFNbgTpdjDBDgxHXvrqI-Ao-LH4
 
 {
   "description": "Active"

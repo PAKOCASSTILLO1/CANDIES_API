@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace WebApi.Controllers
 {
-    //[Authorize]
+    [Authorize]
     [ApiController]
     [Route("api/persona/")]
     public class PersonController : ControllerBase

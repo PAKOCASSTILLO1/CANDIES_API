@@ -49,7 +49,7 @@ namespace WebApi.Services
 
             // verificamos q existe
             if (opOutput == null)
-                throw new AppException("Rol no existe.");
+                throw new AppException("Operacion Producto de salida no existe.");
 
             // actualizamos dato
             opOutput.update(opOutputParam, _context);

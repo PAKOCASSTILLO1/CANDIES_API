@@ -1,6 +1,6 @@
 POST http://localhost:4000/api/cliente/agregar HTTP/1.1
 content-type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6IjEiLCJuYmYiOjE1ODc0MjcyNjYsImV4cCI6MTU4NzQ1NjA2NiwiaWF0IjoxNTg3NDI3MjY2fQ.urTEvNnTzS5boljIxvj8uUT484f6ZqHTEcZtq7Vc5aY
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6IjEiLCJuYmYiOjE1ODc0MzI1NjIsImV4cCI6MTU4NzQ2MTM2MiwiaWF0IjoxNTg3NDMyNTYyfQ.ZNWcN8aTJJ_4XUwhOFNbgTpdjDBDgxHXvrqI-Ao-LH4
 
 {
   "name": "pako1",

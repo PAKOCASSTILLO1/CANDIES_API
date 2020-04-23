@@ -1,6 +1,6 @@
 POST http://localhost:4000/api/tipoProducto/agregar HTTP/1.1
 content-type: application/json
-# Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6IjEiLCJuYmYiOjE1ODY5NTgxNDEsImV4cCI6MTU4Njk2NTM0MSwiaWF0IjoxNTg2OTU4MTQxfQ.roqqHZ79MvD781S6SekebSfXj0fsrttPBafy6_Vmbn8
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6IjEiLCJuYmYiOjE1ODc0MzI1NjIsImV4cCI6MTU4NzQ2MTM2MiwiaWF0IjoxNTg3NDMyNTYyfQ.ZNWcN8aTJJ_4XUwhOFNbgTpdjDBDgxHXvrqI-Ao-LH4
 
 {
   "description": "Tipo1"

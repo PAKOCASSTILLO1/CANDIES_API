@@ -1,6 +1,6 @@
 POST http://localhost:4000/api/proveedor/agregar HTTP/1.1
 content-type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6IjIiLCJuYmYiOjE1ODc0MjUxMDYsImV4cCI6MTU4NzQ1MzkwNiwiaWF0IjoxNTg3NDI1MTA2fQ.i_b5ilhedZSFjtze6hHfVN00b09y3qEqJavF-2o8Ek8
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6IjEiLCJuYmYiOjE1ODc0MzI1NjIsImV4cCI6MTU4NzQ2MTM2MiwiaWF0IjoxNTg3NDMyNTYyfQ.ZNWcN8aTJJ_4XUwhOFNbgTpdjDBDgxHXvrqI-Ao-LH4
 
 {
   "nameProvider": "Proveedor1",

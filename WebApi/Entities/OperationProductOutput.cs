@@ -18,13 +18,11 @@ namespace WebApi.Entities
         public void update(OperationProductOutputDto dto, DataContext context)
         {
             _context = context;
-            this.idProducto = dto.idProducto;
+            this.idProduct = dto.idProduct;
             this.quantity = dto.quantity;
             this.unitValue = dto.unitValue;
-            this.idClient = dto.idClient;
             this.idNotification = dto.idNotification;
-            this.product = _context.Product.Find(dto.idProducto);
-            this.client = _context.Client.Find(dto.idClient);
+            this.product = _context.Product.Find(dto.idProduct);
             this.notification = _context.Notification.Find(dto.idNotification);
         }
 
@@ -45,22 +43,16 @@ namespace WebApi.Entities
         public DateTime dateOperation {get;set;}
 
         [ForeignKey("product")]
-        public int idProducto {set; get;}
+        public int idProduct {set; get;}
 
         public int quantity {get;set;}
         public float unitValue {get;set;}
 
-        [ForeignKey("client")]
-        public int idClient {set; get;}
-
         [ForeignKey("notification")]
-        public int? idNotification {set; get;}
+        public int idNotification {set; get;}
 
         [JsonIgnore]
         public Product product {get;set;}
-
-        [JsonIgnore]
-        public Client client {get;set;}
 
         [JsonIgnore]
         public Notification notification {get;set;}
